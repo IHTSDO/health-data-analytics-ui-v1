@@ -2,6 +2,30 @@ export default function() {
 
     this.namespace = 'api';
 
+    this.get('cohorts', function() {
+        return {
+            data: [{
+                type: 'cohort',
+                id: 'type-1-diabetes',
+                attributes: {
+                    title: 'Type 1 Diabetes',
+                }
+            }, {
+                type: 'cohort',
+                id: 'type-2-diabetes',
+                attributes: {
+                    title: 'Type 2 Diabetes',
+                }
+            }, {
+                type: 'cohort',
+                id: 'males-over-80',
+                attributes: {
+                    title: 'Males over 80',
+                }
+            }]
+        };
+    });
+
   /*
     Config (with defaults).
 
