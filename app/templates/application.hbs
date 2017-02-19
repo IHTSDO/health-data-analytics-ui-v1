@@ -1,5 +1,10 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
-{{!-- Feel free to remove this! --}}
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo right">Health Data Analytics</a>
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li>{{#link-to 'cohorts'}}Cohorts{{/link-to}}</li>
+        </ul>
+    </div>
+</nav>
 
 {{outlet}}
