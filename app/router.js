@@ -8,6 +8,9 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('cohorts');
+  this.route('data-generation', function () {
+      this.route('edit', { path: '/:rule_set_id' });
+  });
 });
 
 export default Router;

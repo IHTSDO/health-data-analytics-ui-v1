@@ -33,6 +33,13 @@ export default function() {
         ];
 
 
+    this.get('/rule-sets', function() {
+        return ruleSets;
+    });
+
+    // Find and return the provided rule-set from our rule-set list above
+    this.get('/rule-sets/:id', function (db, request) {
+        return ruleSets.find((ruleSet) => request.params.id === ruleSet.id);
     });
 
   /*
