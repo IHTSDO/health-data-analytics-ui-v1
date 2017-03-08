@@ -1,10 +1,14 @@
-<nav>
-    <div class="nav-wrapper">
-        <a href="#" class="brand-logo right">Health Data Analytics</a>
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li>{{#link-to 'cohorts'}}Cohorts{{/link-to}}</li>
-        </ul>
-    </div>
-</nav>
+<div class="container">
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo right">Health Data Analytics</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li>{{#link-to 'cohorts'}}Cohorts{{/link-to}}</li>
+                <li>{{#link-to 'data-generation'}}Data Generation{{/link-to}}</li>
+            </ul>
+        </div>
+    </nav>
 
-{{outlet}}
+    {{outlet}}
+
+</div>
