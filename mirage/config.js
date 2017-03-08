@@ -1,29 +1,38 @@
 export default function() {
 
-    this.namespace = 'api';
+    this.namespace = '/api';
 
-    this.get('cohorts', function() {
-        return {
-            data: [{
-                type: 'cohort',
+    this.get('/cohorts', function() {
+        return [
+            {
                 id: 'type-1-diabetes',
-                attributes: {
-                    title: 'Type 1 Diabetes',
-                }
-            }, {
-                type: 'cohort',
+                title: 'Type 1 Diabetes',
+            },
+            {
                 id: 'type-2-diabetes',
-                attributes: {
-                    title: 'Type 2 Diabetes',
-                }
-            }, {
-                type: 'cohort',
+                title: 'Type 2 Diabetes',
+            },
+            {
                 id: 'males-over-80',
-                attributes: {
-                    title: 'Males over 80',
+                title: 'Males over 80',
+            }
+        ];
+    });
+
+    let ruleSets = [
+        {
+            id: 'set-1',
+            title: '30-85 10% Diabetes',
+            relationships: {
+                rootRule: {
+                    id: '1',
+                    chance: "ZZ"
                 }
-            }]
-        };
+            }
+        }
+        ];
+
+
     });
 
   /*
