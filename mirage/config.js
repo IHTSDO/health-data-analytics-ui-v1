@@ -23,11 +23,8 @@ export default function() {
         {
             id: 'set-1',
             title: '30-85 10% Diabetes',
-            relationships: {
-                rootRule: {
-                    id: '1',
-                    chance: "ZZ"
-                }
+            rootRule: {
+                "chance" : 1.0//,
             }
         }
         ];
