@@ -1,4 +1,10 @@
-Title {{model.title}}
+<p>Title {{model.title}}</p>
 
-Root rule {{model.rootRule.chance}}
+<p>Root rule {{model.rootRule.chance}}</p>
 
+<p>independentChildren</p>
+<ul>
+{{#each model.rootRule.independentChildren as |childRule|}}
+    <li>Chance {{childRule.chance}}, {{childRule.operation.conceptId}}</li>
+{{/each}}
+</ul>
