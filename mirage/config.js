@@ -95,6 +95,8 @@ export default function() {
         return ruleSets.find((ruleSet) => request.params.id === ruleSet.id);
     });
 
+    this.passthrough();
+
   /*
     Config (with defaults).
 
