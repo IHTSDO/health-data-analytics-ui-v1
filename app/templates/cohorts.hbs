@@ -1,6 +1,61 @@
 <h2>Cohorts</h2>
+
+{{concept-listing filter=concept choose=(action 'chooseConcept')}}
+
+<div>
+    <a class="waves-effect waves-light btn" {{action "fetchCohort"}}>Fetch Cohort</a>
+</div>
+
+<div class="section center-align">
+    {{#if loading}}
+        <div class="preloader-wrapper active">
+            <div class="spinner-layer spinner-green-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+            </div>
+        </div>
+    {{/if}}
+</div>
+<div class="section">
+    <h4>First 100 Patients</h4>
+    <table class="striped">
+        <thead>
+        <tr>
+            <th>Role ID</th>
+            <th>Name</th>
+            <th>Sex</th>
+            <th>DOB</th>
+            <th>Encounter</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each cohortData.content as |data|}}
+            <tr>
+                <td>{{data.roleId}}</td>
+                <td>{{data.name}}</td>
+                <td>{{data.sex}}</td>
+                <td>{{data.dob}}</td>
+                <td>
+                {{#each data.encounters as |encounter|}}
+                    {{encounter.date}}, <span>{{encounter.conceptTerm}}</span>
+                {{/each}}
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+
+</div>
+
+<!--
 <ul>
     {{#each model as |cohort|}}
         <li>{{cohort.title}}</li>
     {{/each}}
 </ul>
+-->
