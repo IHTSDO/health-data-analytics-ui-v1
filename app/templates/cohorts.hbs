@@ -6,8 +6,8 @@
     <a class="waves-effect waves-light btn" {{action "fetchCohort"}}>Fetch Cohort</a>
 </div>
 
+{{#if loading}}
 <div class="section center-align">
-    {{#if loading}}
         <div class="preloader-wrapper active">
             <div class="spinner-layer spinner-green-only">
                 <div class="circle-clipper left">
@@ -19,7 +19,17 @@
             </div>
             </div>
         </div>
-    {{/if}}
+</div>
+{{/if}}
+{{#unless loading}}
+<div class="section">
+    <h4>Matched Patients: {{format-number cohortData.totalElements format="000,000,000"}}</h4>
+    <h4>Age Distribution</h4>
+    <ul>
+    {{#each cohortData.aggregations.asMap.patient_birth_dates.buckets as |yearOfBirthBucket|}}
+        <li>{{year-to-age yearOfBirthBucket.key.year}} - {{yearOfBirthBucket.docCount}}</li>
+    {{/each}}
+    </ul>
 </div>
 <div class="section">
     <h4>First 100 Patients</h4>

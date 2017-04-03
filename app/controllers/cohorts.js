@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
     ajax: Ember.inject.service(),
+    loading: false,
     init: function() {
         this._super();
         this.get('ajax').request('/api/stats')
@@ -22,6 +23,7 @@ export default Ember.Controller.extend({
                 .then((result) => {
                     this.set('loading', false);
                     this.set('cohortData', result);
+                    result.aggregations.asMap.patient_birth_dates.buckets.reverseObjects();
                 });
         }
     }
