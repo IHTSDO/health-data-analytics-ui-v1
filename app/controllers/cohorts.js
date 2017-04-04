@@ -24,6 +24,10 @@ export default Ember.Controller.extend({
                     this.set('loading', false);
                     this.set('cohortData', result);
                     result.aggregations.asMap.patient_birth_dates.buckets.reverseObjects();
+                    var patientBirthDateValues = result.aggregations.asMap.patient_birth_dates.buckets.map(function(item) {
+                        return {label: new Date().getFullYear() - item.key.year, value: item.docCount};
+                    });
+                    this.set('patientBirthDateValues', patientBirthDateValues);
                 });
         }
     }

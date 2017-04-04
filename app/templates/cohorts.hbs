@@ -25,11 +25,9 @@
 <div class="section">
     <h4>Matched Patients: {{format-number cohortData.totalElements format="000,000,000"}}</h4>
     <h4>Age Distribution</h4>
-    <ul>
-    {{#each cohortData.aggregations.asMap.patient_birth_dates.buckets as |yearOfBirthBucket|}}
-        <li>{{year-to-age yearOfBirthBucket.key.year}} - {{yearOfBirthBucket.docCount}}</li>
-    {{/each}}
-    </ul>
+    <div class="chart-container" style="height: 500px">
+        {{vertical-bar-chart data=patientBirthDateValues sortKey=label}}
+    </div>
 </div>
 <div class="section">
     <h4>First 100 Patients</h4>
