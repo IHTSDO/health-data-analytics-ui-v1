@@ -14,6 +14,7 @@ export default Ember.Controller.extend({
         chooseConcept(concept) {
             console.log(concept);
             this.set('concept', concept);
+            this.send("fetchCohort");
         },
         fetchCohort() {
             let concept = this.get('concept');
