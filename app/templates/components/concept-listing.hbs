@@ -1,6 +1,6 @@
 <div class="input-field">
 {{input id="autocomplete-input" class="autocomplete" value=filter key-up=(action 'autoComplete' filter)}}
-    <label for="autocomplete-input" class="active">Concept</label>
+    <label for="autocomplete-input" class="active">Primary Exposure</label>
     <ul class="autocomplete-content dropdown-content">
         {{#each filteredList.items as |item|}}
             <li {{action 'choose' item}}><span>{{item.fsn}}</span></li>
