@@ -23,13 +23,6 @@
 {{/if}}
 {{#unless loading}}
 <div class="section">
-    <h4>Matched Patients: {{format-number cohortData.totalElements format="000,000,000"}}</h4>
-    <h4>Age Distribution</h4>
-    <div class="chart-container" style="height: 500px">
-        {{vertical-bar-chart data=patientBirthDateValues sortKey=label}}
-    </div>
-</div>
-<div class="section">
     <h4>First 100 Patients</h4>
     <table class="striped">
         <thead>
