@@ -53,9 +53,13 @@
                 <td>{{data.sex}}</td>
                 <td>{{data.dobFormated}}</td>
                 <td>
-                {{#each data.encounters as |encounter|}}
-                    {{encounter.date}}, <span>{{encounter.conceptTerm}}</span>
+                <ul>
+                {{#each (sort-by "dateStamp" "primaryExposure:desc" "conceptTerm" data.encounters) as |encounter|}}
+                    <li>
+                        {{encounter.date}}, <span>{{encounter.conceptTerm}}</span> {{#if encounter.primaryExposure}}<b>Primary Exposure</b>{{/if}}
+                    </li>
                 {{/each}}
+                </ul>
                 </td>
             </tr>
         {{/each}}
