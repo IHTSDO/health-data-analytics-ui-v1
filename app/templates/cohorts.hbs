@@ -1,6 +1,17 @@
 <h2>Cohorts</h2>
 
-{{concept-listing filter=concept choose=(action 'chooseConcept')}}
+{{concept-listing filter=model.primaryExposure choose=(action 'fetchCohort') title='Primary Exposure' cssId="primaryExposure"}}
+
+{{concept-listing filter=model.inclusionCriteria choose=(action 'fetchCohort') title='Inclusion Criteria' cssId="inclusionCriteria"}}
+
+<div class="input-field">
+    {{input id="includeDaysInPast-input" value=model.includeDaysInPast type="text"}}
+    <label for="includeDaysInPast-input">Include days in past</label>
+</div>
+<div class="input-field">
+    {{input id="includeDaysInFuture-input" value=model.includeDaysInFuture type="text"}}
+    <label for="includeDaysInFuture-input">Include days in future</label>
+</div>
 
 <div>
     <a class="waves-effect waves-light btn" {{action "fetchCohort"}}>Fetch Cohort</a>
@@ -23,6 +34,8 @@
 {{/if}}
 {{#unless loading}}
 <div class="section">
+    <h4>{{model.cohortData.totalElements}} Patients Matched</h4>
+    {{#if model.cohortData.content}}
     <h4>First 100 Patients</h4>
     <table class="striped">
         <thead>
@@ -34,7 +47,7 @@
         </tr>
         </thead>
         <tbody>
-        {{#each cohortData.content as |data|}}
+        {{#each model.cohortData.content as |data|}}
             <tr>
                 <td>{{data.roleId}}</td>
                 <td>{{data.sex}}</td>
@@ -48,6 +61,7 @@
         {{/each}}
         </tbody>
     </table>
+    {{/if}}
 
 </div>
 {{/unless}}
