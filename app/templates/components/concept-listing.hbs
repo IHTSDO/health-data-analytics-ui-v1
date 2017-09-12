@@ -1,5 +1,5 @@
 <div class="input-field">
-{{input id=cssId class="autocomplete" value=filter key-up=(action 'autoComplete' filter)}}
+{{input id=cssId class="autocomplete" value=conceptFsn key-up=(action 'autoComplete' conceptFsn)}}
     <label class="active" for="{{cssId}}">{{title}}</label>
     <ul class="autocomplete-content dropdown-content">
         {{#each filteredList.items as |item|}}

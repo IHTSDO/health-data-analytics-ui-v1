@@ -5,7 +5,7 @@ export default Ember.Controller.extend({
     loading: false,
     init: function() {
         this._super();
-        this.get('ajax').request('/api/stats')
+        this.get('ajax').request('health-analytics-api/stats')
             .then((result) => {
                 this.set('stats', result);
             });
@@ -40,7 +40,7 @@ export default Ember.Controller.extend({
             }
 
             console.log("fetch cohort for " + primaryExposureECL + " with inclusionCriteria" + inclusionCriteriaData);
-            this.get('ajax').post('/api/cohort', {
+            this.get('ajax').post('/health-analytics-api/cohort', {
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify({
                     primaryExposureECL: primaryExposureECL,

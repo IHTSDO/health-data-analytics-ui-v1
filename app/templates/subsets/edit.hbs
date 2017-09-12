@@ -1,0 +1,21 @@
+<h3>Subset {{model.name}}</h3>
+
+<div class="row">
+    <div class="col s6">
+        <h4>Focus Concepts
+            <a class="btn-floating waves-effect waves-light tooltipped blue" data-position="top" data-tooltip="Add" {{action 'addFocusConcept'}}><i class="material-icons">add</i>Focus Concept</a>
+        </h4>
+    </div>
+    <div class="col s6">
+    </div>
+</div>
+
+<div class="row">
+{{#each model.eclObjects.focusConcepts as |focusConcept|}}
+    <div class="col s6">
+        {{concept-listing conceptId=focusConcept.conceptId choose=(action 'update')}}
+    </div>
+{{/each}}
+</div>
+
+<a class="waves-effect waves-light btn green" {{action "saveSubset"}}>Save Subset</a>

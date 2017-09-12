@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'health-data-analytics',
     environment: environment,
-    rootURL: '/subsumption/',
+    rootURL: '/health-analytics/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {

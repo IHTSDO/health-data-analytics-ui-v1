@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col s3 sidebar">
+        <h5>Subsets</h5>
+        <div class="collection">
+            {{#each model as |subset|}}
+                {{#link-to 'subsets.edit' subset class="collection-item"}}{{subset.name}}{{/link-to}}
+            {{/each}}
+        </div>
+        <a class="btn-floating waves-effect waves-light blue"><i class="material-icons">add</i></a>
+    </div>
+    <div class="col s9">
+        {{outlet}}
+    </div>
+</div>
