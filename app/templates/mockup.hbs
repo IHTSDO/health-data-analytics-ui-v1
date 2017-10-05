@@ -1,0 +1,253 @@
+<h2>Cohorts</h2>
+
+<div class="row">
+    <div class="col-md-3">
+    {{concept-listing filter=model.primaryExposure choose=(action 'fetchCohort') title='Primary Exposure' cssId="primaryExposure"}}
+
+    {{concept-listing filter=model.inclusionCriteria choose=(action 'fetchCohort') title='Inclusion Criteria' cssId="inclusionCriteria"}}
+
+    <div class="input-field">
+        {{input id="includeDaysInPast-input" value=model.includeDaysInPast type="text"}}
+        <label for="includeDaysInPast-input">Include days in past</label>
+    </div>
+    <div class="input-field">
+        {{input id="includeDaysInFuture-input" value=model.includeDaysInFuture type="text"}}
+        <label for="includeDaysInFuture-input">Include days in future</label>
+    </div>
+
+    <div>
+        <a class="waves-effect waves-light btn blue" {{action "fetchCohort"}}>Fetch Cohort</a>
+    </div>
+
+    {{#if loading}}
+    <div class="section center-align">
+            <div class="preloader-wrapper active">
+                <div class="spinner-layer spinner-green-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+            </div>
+    </div>
+    {{/if}}
+    {{#unless loading}}
+    <div class="section">
+        <h4>{{model.cohortData.totalElements}} Patients Matched</h4>
+        {{#if model.cohortData.content}}
+        <h4>First 100 Patients</h4>
+        <table class="striped">
+            <thead>
+            <tr>
+                <th>Role ID</th>
+                <th>Sex</th>
+                <th>DOB</th>
+                <th>Encounter</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each model.cohortData.content as |data|}}
+                <tr>
+                    <td>{{data.roleId}}</td>
+                    <td>{{data.sex}}</td>
+                    <td>{{data.dobFormated}}</td>
+                    <td>
+                    <ul>
+                    {{#each (sort-by "dateStamp" "primaryExposure:desc" "conceptTerm" data.encounters) as |encounter|}}
+                        <li>
+                            {{encounter.date}}, <span>{{encounter.conceptTerm}}</span> {{#if encounter.primaryExposure}}<b>Primary Exposure</b>{{/if}}
+                        </li>
+                    {{/each}}
+                    </ul>
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        {{/if}}
+
+    </div>
+    {{/unless}}
+    <div>
+        <h3>Results</h3>
+        <p>Total: 3623</p>
+        <p>Sex: 35% Female, 65% Male</p>
+        <p>Age range: 24 - 78</p>
+    </div>
+    <div>
+        <h3>Patient Results</h3>
+        <thead>
+            <tr>
+                <th>Role ID</th>
+                <th>Sex</th>
+                <th>DOB</th>
+                <th>Encounter</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Id</td>
+                    <td>Male</td>
+                    <td>01/03/1988</td>
+                    <td>
+                    <ul>
+                        <li>Encounter 1</li>
+                        <li>Encounter 2</li>
+                    </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Id</td>
+                    <td>Male</td>
+                    <td>01/03/1988</td>
+                    <td>
+                    <ul>
+                        <li>Encounter 1</li>
+                        <li>Encounter 2</li>
+                    </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Id</td>
+                    <td>Male</td>
+                    <td>01/03/1988</td>
+                    <td>
+                    <ul>
+                        <li>Encounter 1</li>
+                        <li>Encounter 2</li>
+                    </ul>
+                    </td>
+                </tr>
+            </tbody>
+    </div>
+</div>
+<div class="col-md-3">
+    {{concept-listing filter=model.primaryExposure choose=(action 'fetchCohort') title='Primary Exposure' cssId="primaryExposure"}}
+
+    {{concept-listing filter=model.inclusionCriteria choose=(action 'fetchCohort') title='Inclusion Criteria' cssId="inclusionCriteria"}}
+
+    <div class="input-field">
+        {{input id="includeDaysInPast-input" value=model.includeDaysInPast type="text"}}
+        <label for="includeDaysInPast-input">Include days in past</label>
+    </div>
+    <div class="input-field">
+        {{input id="includeDaysInFuture-input" value=model.includeDaysInFuture type="text"}}
+        <label for="includeDaysInFuture-input">Include days in future</label>
+    </div>
+
+    <div>
+        <a class="waves-effect waves-light btn blue" {{action "fetchCohort"}}>Fetch Cohort</a>
+    </div>
+
+    {{#if loading}}
+    <div class="section center-align">
+            <div class="preloader-wrapper active">
+                <div class="spinner-layer spinner-green-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+            </div>
+    </div>
+    {{/if}}
+    {{#unless loading}}
+    <div class="section">
+        <h4>{{model.cohortData.totalElements}} Patients Matched</h4>
+        {{#if model.cohortData.content}}
+        <h4>First 100 Patients</h4>
+        <table class="striped">
+            <thead>
+            <tr>
+                <th>Role ID</th>
+                <th>Sex</th>
+                <th>DOB</th>
+                <th>Encounter</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each model.cohortData.content as |data|}}
+                <tr>
+                    <td>{{data.roleId}}</td>
+                    <td>{{data.sex}}</td>
+                    <td>{{data.dobFormated}}</td>
+                    <td>
+                    <ul>
+                    {{#each (sort-by "dateStamp" "primaryExposure:desc" "conceptTerm" data.encounters) as |encounter|}}
+                        <li>
+                            {{encounter.date}}, <span>{{encounter.conceptTerm}}</span> {{#if encounter.primaryExposure}}<b>Primary Exposure</b>{{/if}}
+                        </li>
+                    {{/each}}
+                    </ul>
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        {{/if}}
+
+    </div>
+    {{/unless}}
+    <div>
+        <h3>Results</h3>
+        <p>Total: 3623</p>
+        <p>Sex: 35% Female, 65% Male</p>
+        <p>Age range: 24 - 78</p>
+    </div>
+    <div>
+        <h3>Patient Results</h3>
+        <thead>
+            <tr>
+                <th>Role ID</th>
+                <th>Sex</th>
+                <th>DOB</th>
+                <th>Encounter</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Id</td>
+                    <td>Male</td>
+                    <td>01/03/1988</td>
+                    <td>
+                    <ul>
+                        <li>Encounter 1</li>
+                        <li>Encounter 2</li>
+                    </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Id</td>
+                    <td>Male</td>
+                    <td>01/03/1988</td>
+                    <td>
+                    <ul>
+                        <li>Encounter 1</li>
+                        <li>Encounter 2</li>
+                    </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Id</td>
+                    <td>Male</td>
+                    <td>01/03/1988</td>
+                    <td>
+                    <ul>
+                        <li>Encounter 1</li>
+                        <li>Encounter 2</li>
+                    </ul>
+                    </td>
+                </tr>
+            </tbody>
+    </div>
+</div>
+<div class="col-md-3">
+    <h3>Comparison</h3>
+</div>
+</div>
