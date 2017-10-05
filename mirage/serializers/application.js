@@ -1,5 +1,4 @@
-import DS from 'ember-data';
+import { JSONAPISerializer } from 'ember-cli-mirage';
 
-export default DS.JSONSerializer.extend({
-
+export default JSONAPISerializer.extend({
 });

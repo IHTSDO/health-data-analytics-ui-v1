@@ -1,41 +1,6 @@
 export default function() {
 
-    this.namespace = '/health-analytics-api';
-
-    // let subsets = [
-    //     {
-    //         id: 'one',
-    //         name: 'One',
-    //         eclModel: '{ "focusConcepts": [{"conceptId":"51774004"}, {"conceptId":"456"}] }'
-    //     }
-    // ];
-
-    // this.get('/subsets', function() {
-    //     return subsets;
-    // });
-    //
-    // this.get('subsets/:id', function (db, request) {
-    //     return subsets.find((subset) => request.params.id === subset.id);
-    // });
-
-    this.get('/cohorts', function() {
-        return [
-            {
-                id: 'type-1-diabetes',
-                title: 'Type 1 Diabetes',
-            },
-            {
-                id: 'type-2-diabetes',
-                title: 'Type 2 Diabetes',
-            },
-            {
-                id: 'males-over-80',
-                title: 'Males over 80',
-            }
-        ];
-    });
-
-    this.passthrough();
+  // These comments are here to help you get started. Feel free to delete them.
 
   /*
     Config (with defaults).
