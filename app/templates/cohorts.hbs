@@ -1,31 +1,46 @@
 <div class="row">
-    <div class="col-md-11 col-md-offset-1">
-        <h2>Cohorts</h2>
+    <div class="col-md-12">
+        <div class="col-md-6 grey-border-bottom">
+            <h3>Cohort</h3>
+        </div>
+        <div class="col-md-6 grey-border-bottom">
+            <h3>{{model.cohortData.totalElements}} Patients Matched</h3>
+        </div>
     </div>
+    
     <div class="col-md-6">
-        <div class="col-md-12  input-field">
+         <div class="col-md-10 col-md-offset-1">
+            <h5>Demographic:</h5>
+        </div>
+        <div class="col-md-10 col-md-offset-1 input-field">
             {{input id="gender-input" class="form-control" value=model.gender type="text"}}
             <label for="gender-input" style="margin-left:14px;">Gender</label>
         </div>
-        <div class="col-md-12  input-field">
+        <div class="col-md-10 col-md-offset-1 input-field">
             {{input id="ageMin-input" class="form-control" value=model.ageMin type="text"}}
             <label for="ageMin-input" style="margin-left:14px;">Minimum Age</label>
         </div>
-        <div class="col-md-12  input-field">
+        <div class="col-md-10 col-md-offset-1 input-field">
             {{input id="ageMax-input" class="form-control" value=model.ageMax type="text"}}
             <label for="ageMax-input" style="margin-left:14px;">Maximum Age</label>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-10 col-md-offset-1">
+            <h5>Primary Exposure:</h5>
+        </div>
+        <div class="col-md-10 col-md-offset-1">
             {{concept-listing filter=model.primaryExposure value=model.primaryExposure  choose=(action 'fetchCohort') title='Primary Exposure' cssId="primaryExposure"}}
         </div>
-        <div class="col-md-12">
+        <div class="col-md-10 col-md-offset-1">
+            <h5>Refinement:</h5>
+        </div>
+        <div class="col-md-10 col-md-offset-1">
             {{concept-listing filter=model.inclusionCriteria value=model.inclusionCriteria choose=(action 'fetchCohort') title='Inclusion Criteria' cssId="inclusionCriteria"}}
         </div>
-        <div class="col-md-10 col-md-offset-1  input-field">
+        <div class="col-md-9 col-md-offset-2  input-field">
             {{input id="includeDaysInPast-input" class="form-control" value=model.includeDaysInPast type="text"}}
             <label for="includeDaysInPast-input" style="margin-left:14px;">Include days in past</label>
         </div>
-        <div class="col-md-10 col-md-offset-1 input-field">
+        <div class="col-md-9 col-md-offset-2 input-field">
             {{input id="includeDaysInFuture-input" class="form-control" value=model.includeDaysInFuture type="text"}}
             <label for="includeDaysInFuture-input" style="margin-left:14px;">Include days in future</label>
         </div>
@@ -52,7 +67,6 @@
         {{/if}}
         {{#unless loading}}
         <div class="section">
-            <h4>{{model.cohortData.totalElements}} Patients Matched</h4>
             {{#if model.cohortData.content}}
             <h4>First 100 Patients</h4>
             <table class="striped">
@@ -68,7 +82,7 @@
                 {{#each model.cohortData.content as |data|}}
                     <tr>
                         <td>{{data.roleId}}</td>
-                        <td>{{data.sex}}</td>
+                        <td>{{data.gender}}</td>
                         <td>{{data.dobFormated}}</td>
                         <td>
                         <ul>

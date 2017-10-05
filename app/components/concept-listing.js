@@ -4,10 +4,27 @@ export default Ember.Component.extend({
     ajax: Ember.inject.service(),
     conceptFsn: null,
     conceptId: null,
+    subsets: null,
     filteredList: null,
     init: function() {
         this._super();
         let conceptId = this.get('conceptId');
+        this.get('ajax').request('/health-analytics-api/subsets?page=0&size=100')
+            .then((results) => {
+                    var subsetArray = [];
+                    results.content.forEach(function(item){
+                        var subset = {};
+                        subset.fsn = item.name;
+                        subset.id = item.ecl;
+                        subsetArray.push(subset);
+                    });
+                    this.set('subsets', subsetArray);
+                
+                })
+                .catch((results) => {
+                    this.set('subsets', results.content);
+                });
+        
         if (!Ember.isBlank(conceptId)) {
             console.log("concept list component, fetching fsn " + conceptId);
             this.get('ajax').request('/health-analytics-api/concepts/' + conceptId)
@@ -24,7 +41,16 @@ export default Ember.Component.extend({
             if(param !== "") {
                 this.get('ajax').request('/health-analytics-api/concepts', {data: {prefix: param}})
                     .then((result) => {
-                    this.set('filteredList', result);
+                    var list = {};
+                    var subsets = this.get('subsets');
+                    var filteredSubsets = [];
+                    subsets.forEach(function(item){
+                        if(item.fsn.toLowerCase().indexOf(param.toLowerCase()) !== -1){
+                            filteredSubsets.push(item);
+                        }
+                    });
+                    list.items= filteredSubsets.concat(result.items);
+                    this.set('filteredList', list);
                 });
             }
             else {
