@@ -1,0 +1,60 @@
+@import "ember-bootstrap/bootstrap";
+@import "notification.scss";
+@import "ihtsdo.scss";
+@import "header.scss";
+@import "home.scss";
+@import "colors.scss";
+@import "fonts.scss";
+@import "icons.scss";
+@import "glphicons.scss";
+@import "grid.scss";
+@import "globals.scss";
+@import "formfields.scss";
+@import "tables.scss";
+@import "typography.scss";
+@import "badge.scss";
+@import "button.scss";
+@import "responsive.scss";
+@import "main.scss";
+@import "rules.scss";
+
+body {
+    font-family:Roboto,sans-serif;
+}
+
+html, body {
+    margin:0;
+    padding:0;
+    height:100%;
+    font-size: 12px;
+}
+
+body > .ember-view,
+body > .ember-view > .row,
+body > .ember-view > .row > .col {
+    height: 100%;
+}
+
+main {
+    flex: 1 0 auto;
+}
+.nav-wrapper {
+    background-color: #474747;
+    font-size: 14px;
+}
+.nav .brand-logo {
+    color: #e9e9e9;
+
+}
+.sidebar {
+    background-color: #ececec;
+
+}
+
+.grey-border-bottom{
+    border-bottom: 1px lightgrey solid;
+}
+.grey-border-right{
+    border-right: 2px lightgrey solid;
+}
+@import "ember-bootstrap/bootstrap";

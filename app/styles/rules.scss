@@ -1,0 +1,43 @@
+.rule-column{
+    box-shadow: -.5px -.5px 0 .5px #ccc, inset -1px -1px 0 0 #ccc;
+    height: 100vh;
+}
+.grey-column{
+    background-color:#ececec;
+}
+.arrow {
+  border: solid rgb(0, 164, 228);;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 14px;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.attribute-values {
+    height: 500px;
+    overflow-x: scroll;
+}
+
+.center-block {
+   margin-left:auto;
+   margin-right:auto;
+   display:block;
+}
+
+.text-center {
+   text-align:center
+}

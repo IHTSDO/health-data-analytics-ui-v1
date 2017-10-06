@@ -1,11 +1,9 @@
-<nav>
-    <div class="nav-wrapper">
-        <a href="#" class="brand-logo right">Health Data Analytics <sup>(In Development)</sup></a>
-        <ul id="nav-mobile" class="left">
-            <li>{{#link-to 'subsets'}}Subsets{{/link-to}}</li>
-            <li>{{#link-to 'cohorts'}}Cohorts{{/link-to}}</li>
-        </ul>
-    </div>
-</nav>
-
-{{outlet}}
+<body style="theme-template-dark theme-blue">
+    <main>
+        <div class="main-container sca-colours">
+            {{mrcm-header}}
+            {{outlet}}
+            {{mrcm-footer}}
+        </div>
+    </main>
+</body>
