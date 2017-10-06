@@ -1258,3 +1258,19 @@ input[type=text]:focus:not([readonly]) {
     font-size: 14px;
     line-height: 1rem;
 }
+
+.hidden-table-data { 
+    margin-left:0px;
+    overflow: hidden;
+    visibility:hidden;
+    opacity:0;
+    height: 0;
+    transition:visibility 0s linear 0.5s,opacity 0.5s linear,margin-left 0.5s linear, height 0.5s linear;
+}
+.parent:hover .hidden-table-data { 
+    height: auto;
+    visibility:visible;
+    opacity:1;
+    transition-delay:0s;
+    margin-left:20px;
+}

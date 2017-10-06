@@ -81,21 +81,22 @@
                 </thead>
                 <tbody>
                 {{#each model.cohortData.content as |data|}}
-                    <tr>
+                    <tr  class="parent">
                         <td>{{data.roleId}}</td>
                         <td>{{data.gender}}</td>
                         <td>{{data.dobFormated}}</td>
-                        <td class="parent">
+                        <td>
                         <ul>
                         {{#each (sort-by "dateStamp" "primaryExposure:desc" "conceptTerm" data.encounters) as |encounter|}}
                             {{#if encounter.primaryExposure}}
                                 <li>
-                                    {{encounter.date}}, <span>{{encounter.conceptTerm}}</span> <b>Primary Exposure</b>
+                                    <b>{{encounter.date}}, </b><span><b>{{encounter.conceptTerm}}</b></span>
                                 </li>
                             {{else}}
-                                <li class="hidden-table-data">
+                                <li class="hidden-table-data" >
                                     {{encounter.date}}, <span>{{encounter.conceptTerm}}</span>
                                 </li>
+                            
                             {{/if}}
                         {{/each}}
                         </ul>
