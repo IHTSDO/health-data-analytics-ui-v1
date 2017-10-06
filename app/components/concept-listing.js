@@ -31,7 +31,7 @@ export default Ember.Component.extend({
                 .then((concept) => {
                     this.set('conceptFsn', concept.fsn);
                 })
-                .catch((concept) => {
+                .catch(() => {
                     this.set('conceptFsn', conceptId);
                 });
         }

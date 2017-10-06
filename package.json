@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "bootstrap-sass": "^3.3.7",
-    "broccoli-asset-rev": "^2.4.5",
+    "broccoli-asset-rev": "^2.6.0",
     "ember-ajax": "^2.4.1",
     "ember-bootstrap": "^1.0.0-rc.2",
     "ember-charts": "1.2.1",

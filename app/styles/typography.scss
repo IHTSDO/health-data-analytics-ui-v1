@@ -1226,17 +1226,6 @@ strong {
   font-size:3em;
 }
 
-.no-border-bottom{
-  box-shadow: none !important;
-}
-
-.template-editable {
-  box-shadow: inset 0 -2px 0 #00a6e5 !important;
-  textarea {
-    box-shadow: inset 0 -2px 0 #00a6e5 !important;
-  }
-}
-
 .dropdown-content li>a, .dropdown-content li>span {
     color:deepskyblue;
 }
@@ -1273,4 +1262,16 @@ input[type=text]:focus:not([readonly]) {
     opacity:1;
     transition-delay:0s;
     margin-left:20px;
+}
+
+.input-field label:not(.label-icon).active {
+    font-size: 14px;
+}
+
+[contenteditable].form-control, [type=email].form-control, [type=password].form-control, [type=tel].form-control, [type=text].form-control {
+    font-size:14px;
+}
+
+nav ul a {
+    font-size:14px;
 }

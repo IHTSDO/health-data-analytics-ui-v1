@@ -47,7 +47,7 @@ export default Ember.Controller.extend({
 
             console.log("fetch cohort for " + primaryExposureECL + " with inclusionCriteria" + inclusionCriteriaData);
             if(primaryExposure.indexOf("<<") === -1 && primaryExposure.indexOf(">>") === -1){
-                primaryExposure = "<< " + primaryExposure
+                primaryExposure = "<< " + primaryExposure;
             }
             this.get('ajax').post('/health-analytics-api/cohorts/select', {
                 contentType: 'application/json; charset=utf-8',
@@ -56,8 +56,8 @@ export default Ember.Controller.extend({
                     minAge: ageMin,
                     maxAge: ageMax,
                     primaryExposure:  {
-    "ecl": primaryExposure
-  },
+                        "ecl": primaryExposure
+                      },
                     inclusionCriteria: inclusionCriteriaData
                 })})
                 .then((result) => {
