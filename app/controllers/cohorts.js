@@ -38,8 +38,11 @@ export default Ember.Controller.extend({
 
             let inclusionCriteriaData = null;
             if (Ember.isPresent(inclusionCriteria)) {
+                if(inclusionCriteria.indexOf("<<") === -1 && inclusionCriteria.indexOf(">>") === -1){
+                    inclusionCriteria = "<< " + inclusionCriteria;
+                }
                 inclusionCriteriaData = {
-                    selectionECL: this.toECL(inclusionCriteria),
+                    ecl: this.toECL(inclusionCriteria),
                     includeDaysInPast: this.get('model.includeDaysInPast'),
                     includeDaysInFuture: this.get('model.includeDaysInFuture')
                 };
