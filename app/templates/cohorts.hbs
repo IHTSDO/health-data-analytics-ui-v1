@@ -52,24 +52,18 @@
     </div>
     <div class="col-md-8">
         {{#if loading}}
-        <div class="section center-align">
-                <div class="preloader-wrapper active">
-                    <div class="spinner-layer spinner-green-only">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div><div class="gap-patch">
-                        <div class="circle"></div>
-                    </div><div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                    </div>
-                </div>
+        <div class="row col-md-4 text-center">
+            <div class="custom-loader"></div>
         </div>
         {{/if}}
         {{#unless loading}}
         <div class="section">
             {{#if model.cohortData.content}}
-            <h3>First 100 of {{model.cohortData.totalElements}} Patients</h3>
+                {{#if model.cohortData.last}}
+                    <h3>Displaying {{model.cohortData.totalElements}} Patients</h3>
+                {{else}}
+                    <h3>First 100 of {{model.cohortData.totalElements}} Patients</h3>
+                {{/if}}
             <table class="striped">
                 <thead>
                 <tr>
@@ -105,6 +99,10 @@
                 {{/each}}
                 </tbody>
             </table>
+            {{else}}
+                {{#if model.cohortData}}
+                    <h3>No results</h3>
+                {{/if}}
             {{/if}}
 
         </div>
