@@ -1,30 +1,32 @@
 {{yield}}
 <nav class="navbar grey darken-3 navbar-fixed-top row col-md-12">
   <div class="container-fluid">
-    <ul class="nav navbar-nav navbar-left navbar-left-no-collapse col-md-3 no-padding pull-left">
-      <li>
-        <div class="brand-logo pull-left">
+    <div class="nav navbar-nav navbar-left navbar-left-no-collapse col-md-7 no-padding">
+      <div class="col-md-5">
           <div id="logo">
             <img class="img-responsive" src="assets/images/small_logo.png" alt="SNOMED International" width="40" height="40">
           </div>
-          <span>Health Data Analytics</span>
-        </div>
-      </li>
+          <div style="display: inline-block; margin-left:10px;">Health Data Analytics</div>
+      </div>
+<!--
       <li class="pull-right">
           <div>
               <a>{{#link-to 'subsets'}}Subsets{{/link-to}}</a>
           </div>
       </li>
-      <li class="pull-right">
+-->
+      <div class="col-md-2">
           <div>
               <a>{{#link-to 'cohorts'}}Cohorts{{/link-to}}</a>
           </div>
-      </li>
-    </ul>
+      </div>
+    </div>
+<!--
     <ul class="nav navbar-nav navbar-right navbar-right-no-collapse identity-services col-md-2">
       <li class="pull-right">
         <a ng-href="#/login">Login</a>
       </li>
     </ul>
+-->
   </div>
 </nav>
