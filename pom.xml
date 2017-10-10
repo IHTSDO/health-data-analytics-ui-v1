@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.ihtsdo.otf</groupId>
+	<artifactId>health-data-analytics-frontend</artifactId>
+	<version>0.30.0</version>
+	<name>SNOMED Health data analytics Ember frontend application</name>
+	<description>SNOMED Health data analytics Ember frontend application</description>
+	<url>https://test.ihtsdotools.org/</url>
+
+	<properties>
+		<packageName>${project.artifactId}</packageName>
+		<sonar.sources>app</sonar.sources>
+		<sonar.tests>test</sonar.tests>
+		<sonar.javascript.lcov.reportPath>reports/coverage/lcov.info</sonar.javascript.lcov.reportPath>
+		<sonar.surefire.reportsPath>reports/junit</sonar.surefire.reportsPath>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.vafer</groupId>
+				<artifactId>jdeb</artifactId>
+				<version>1.1.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jdeb</goal>
+						</goals>
+						<configuration>
+							<deb>${project.build.directory}/${packageName}-${project.version}-all.deb</deb>
+							<controlDir>${basedir}/deb/control</controlDir>
+							<snapshotExpand>true</snapshotExpand>
+							<snapshotEnv>BUILD_NUMBER</snapshotEnv>
+							<verbose>true</verbose>
+							<classifier>all</classifier>
+							<signPackage>false</signPackage>
+							<dataSet>
+								<data>
+									<src>${basedir}/dist</src>
+									<type>directory</type>
+									<mapper>
+										<type>perm</type>
+										<prefix>/opt/${packageName}/lib/</prefix>
+									</mapper>
+								</data>
+							</dataSet>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>ihtsdo-public-nexus</id>
+			<name>IHTSDO Public Nexus Releases</name>
+			<url>https://maven.ihtsdotools.org/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>ihtsdo-public-nexus</id>
+			<name>IHTSDO Public Nexus Snapshots</name>
+			<url>https://maven.ihtsdotools.org/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>
