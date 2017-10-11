@@ -86,17 +86,10 @@
                         <td>
                         <ul>
                         {{#each (sort-by "dateStamp" "primaryExposure:desc" "conceptTerm" data.encounters) as |encounter|}}
-                            {{#if encounter.primaryExposure}}
-                                <li>
-                                    <b>{{encounter.date}}, </b><span><b>{{encounter.conceptTerm}}</b></span>
-                                </li>
-                            {{else}}
-                                <li class="hidden-table-data" >
-                                    {{encounter.date}}, <span>{{encounter.conceptTerm}}</span>
-                                </li>
-                            
-                            {{/if}}
-                        {{/each}}
+                        <li>
+                            {{encounter.date}}, <span>{{encounter.conceptTerm}}</span> {{#if encounter.primaryExposure}}<b>Primary Exposure</b>{{/if}}
+                        </li>
+                    {{/each}}
                         </ul>
                         </td>
                     </tr>
