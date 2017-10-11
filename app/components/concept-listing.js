@@ -16,6 +16,7 @@ export default Ember.Component.extend({
                         var subset = {};
                         subset.fsn = item.name;
                         subset.id = item.ecl;
+                        subset.subset = true;
                         subsetArray.push(subset);
                     });
                     this.set('subsets', subsetArray);

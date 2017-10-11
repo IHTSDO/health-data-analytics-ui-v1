@@ -1292,8 +1292,13 @@ nav ul a {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
+.hdad-table{
+    margin-bottom: 40px;
+}
 
 .hdad-table td, th {
     padding: 4px;
+}
+.dropdown-content li>span.subset{
+    font-weight: bold;
 }
