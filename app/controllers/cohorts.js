@@ -20,6 +20,7 @@ export default Ember.Controller.extend({
             return conceptString;
         }
     },
+    
     actions: {
         fetchCohort() {
             this.set('loading', true);
@@ -27,6 +28,7 @@ export default Ember.Controller.extend({
             var gender;
             let primaryExposure = this.get('model.primaryExposure');
             let primaryExposureECL = this.toECL(primaryExposure);
+            this.set('model.gender', $('#genderSelect').find(":selected").text());
             if(this.get('model.gender') !== null && this.get('model.gender') !== undefined){
                 gender = this.get('model.gender').toUpperCase();
             }
@@ -60,7 +62,7 @@ export default Ember.Controller.extend({
                       },
                     inclusionCriteria: inclusionCriteriaData
                 };
-            if(this.get('model.gender') !== null && this.get('model.gender') !== undefined){
+            if(this.get('model.gender') !== null && this.get('model.gender') !== undefined && this.get('model.gender').length !== 0){
                 postData.gender = this.get('model.gender').toUpperCase();
             }
             if(this.get('model.ageMin') !== null && this.get('model.ageMin') !== undefined){
@@ -77,6 +79,9 @@ export default Ember.Controller.extend({
                     this.set('loading', false);
                     this.set('model.cohortData', result);
                 });
-        }
+        },
+        updateGender(){
+            console.log(this);
+        },
     }
 });

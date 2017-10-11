@@ -13,9 +13,13 @@
          <div class="col-md-10 col-md-offset-1">
             <h3>Demographic:</h3>
         </div>
-        <div class="col-md-10 col-md-offset-1 input-field">
-            {{input id="gender-input" class="form-control" value=model.gender type="select"}}
-            <label for="gender-input" style="margin-left:14px;">Gender</label>
+        <div class="col-md-10 col-md-offset-1 input-field" style="margin-bottom:10px;">
+          <div style="color: #9e9e9e; font-size:1rem; font-weight: bold;">Gender</div>
+          <select name="gender" id="genderSelect" class="form-control">    
+            <option value="null"></option>
+            <option value="male">Male</option>
+            <option value="female" >Female</option>    
+          </select>
         </div>
         <div class="col-md-10 col-md-offset-1 input-field">
             {{input id="ageMin-input" class="form-control" value=model.ageMin type="text"}}
