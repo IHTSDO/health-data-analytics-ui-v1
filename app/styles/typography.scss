@@ -1277,6 +1277,9 @@ nav ul a {
 }
 
 .custom-loader {
+    display: inline-block;
+    float: none;
+    margin-top:60px;
     border: 12px solid #f3f3f3; /* Light grey */
     border-top: 12px solid #3498db; /* Blue */
     border-radius: 50%;
