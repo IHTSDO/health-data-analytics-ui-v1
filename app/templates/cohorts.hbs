@@ -87,7 +87,7 @@
                         <ul>
                         {{#each (sort-by "dateStamp" "primaryExposure:desc" "conceptTerm" data.encounters) as |encounter|}}
                         <li>
-                            {{encounter.date}}, <span>{{encounter.conceptTerm}}</span> {{#if encounter.primaryExposure}}<b>Primary Exposure</b>{{/if}}
+                            {{encounter.date}}, <span>{{encounter.conceptTerm}}</span> {{#if encounter.primaryExposure}}<b style="color:steelblue;">Primary Exposure</b>{{/if}}
                         </li>
                     {{/each}}
                         </ul>

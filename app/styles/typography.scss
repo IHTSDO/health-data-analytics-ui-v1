@@ -1227,16 +1227,16 @@ strong {
 }
 
 .dropdown-content li>a, .dropdown-content li>span {
-    color:deepskyblue;
+    color:steelblue;
 }
 
 input[type=text]:focus:not([readonly])+label {
-    color:deepskyblue;
+    color:steelblue;
 }
 
 input[type=text]:focus:not([readonly]) {
-    border-bottom: 1px solid deepskyblue;
-    box-shadow: 0 1px 0 0 deepskyblue;
+    border-bottom: 1px solid steelblue;
+    box-shadow: 0 1px 0 0 steelblue;
 }
 
 .input-field label:not(.label-icon).active {
@@ -1281,7 +1281,7 @@ nav ul a {
     float: none;
     margin-top:60px;
     border: 12px solid #f3f3f3; /* Light grey */
-    border-top: 12px solid #3498db; /* Blue */
+    border-top: 12px solid steelblue;
     border-radius: 50%;
     width: 80px;
     height: 80px;
