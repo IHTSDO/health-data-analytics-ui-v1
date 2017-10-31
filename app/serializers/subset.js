@@ -5,7 +5,11 @@ export default DS.JSONSerializer.extend(
         normalizeArrayResponse(store, clazz, payload) {
             payload = payload.content;
             payload.forEach(function (item) {
-                item.eclObjects = JSON.parse(item.eclModel);
+                if(item.eclModel !== null && item.eclModel !== "")
+                    {
+                        item.eclObjects = JSON.parse(item.eclModel);
+                    }
+                
             });
             return this._super(store, clazz, payload);
         },

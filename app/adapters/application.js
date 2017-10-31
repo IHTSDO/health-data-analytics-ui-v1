@@ -14,7 +14,6 @@ export default DS.JSONAPIAdapter.extend({
         var current = window.location;
         window.location.replace("https://ims.ihtsdotools.org/#/login?serviceReferer=" + current);
     }
-
-    return this._super(status, headers, payload, requestData);
+    return this._super(...arguments);
   }
 });

@@ -3,20 +3,7 @@ import config from './config/environment';
 
 const Router = Ember.Router.extend({
   location: config.locationType,
-  rootURL: config.rootURL,
-    model(params) {
-    return this.get('store').findAll('privileged-model');
-  },
-  actions: {
-    error(error, transition) {
-      if (error.status === '403') {
-        this.replaceWith('login');
-      } else {
-        // Let the route above this handle the error.
-        return true;
-      }
-    }
-  }
+  rootURL: config.rootURL
 });
 
 Router.map(function() {
