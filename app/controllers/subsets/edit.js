@@ -25,16 +25,23 @@ export default Ember.Controller.extend({
         },
         saveSubset() {
             console.log("saveSubset");
-            this.set('saving', true);
-            this.get('ajax').post('/health-analytics-api/subsets',
-                {
-                    contentType: 'application/json; charset=utf-8',
-                    data: JSON.stringify(this.get("model"))
-                })
-                .then((result) => {
-                    this.set('saving', false);
-                    this.set('model', result);
-                });
-        }
+            console.log(this.get("model"));
+//            this.set('saving', true);
+//            this.get('ajax').post('/health-analytics-api/subsets',
+//                {
+//                    contentType: 'application/json; charset=utf-8',
+//                    data: JSON.stringify(this.get("model"))
+//                })
+//                .then((result) => {
+//                    this.set('saving', false);
+//                    this.set('model', result);
+//                });
+        },
+          setValue(model, event) {
+            model = event.target.value;
+          },
+        loadValue(model, event) {
+            event.target.value = model;
+          }
     }
 });

@@ -8,12 +8,12 @@ export default DS.RESTAdapter.extend({
     }
 });
 
-export default DS.JSONAPIAdapter.extend({
-  handleResponse(status, headers, payload, requestData) {
-    if(status === 403) {
-        var current = window.location;
-        window.location.replace("https://ims.ihtsdotools.org/#/login?serviceReferer=" + current);
-    }
-    return this._super(...arguments);
-  }
-});
+//export default DS.JSONAPIAdapter.extend({
+//  handleResponse(status, headers, payload, requestData) {
+//    if(status === 403) {
+//        var current = window.location;
+//        window.location.replace("https://ims.ihtsdotools.org/#/login?serviceReferer=" + current);
+//    }
+//    return this._super(...arguments);
+//  }
+//});
