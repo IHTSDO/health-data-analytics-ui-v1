@@ -57,4 +57,9 @@ main {
 .grey-border-right{
     border-right: 2px lightgrey solid;
 }
+.eclGroup{
+    border: 2px solid lightgrey;
+    padding:10px;
+    margin:10px;
+}
 @import "ember-bootstrap/bootstrap";

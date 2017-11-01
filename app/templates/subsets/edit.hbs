@@ -1,82 +1,96 @@
 <h3 class="grey-border-bottom">Editing Subset : {{model.name}}</h3>
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="col-md-10 input-field" style="margin-left:10px;">
                       <div style="color: #9e9e9e; font-size:1rem; font-weight: bold;">Subset Name</div>
                       {{input id="name-input" class="form-control" value=model.name type="text"}}
                     </div>
                         {{#each model.eclObjects as |eclObject|}}
-                            <div class="col-md-12">
+                            <div class="row col-md-12 eclGroup">
                                 {{#if eclObject.operator}}
-                                    <div class="col-md-6 col-md-offset-3">
-                                        <div style="color: #9e9e9e; font-size:1rem; font-weight: bold;">Operator</div>
-                                        <select style="display: inline-block;">
-                                          {{#each model.operatorOptions as |opOption|}}
-                                            <option value={{opOption.value}} selected={{eq eclObject.operator opOption.value}}>{{opOption.name}}</option>
-                                          {{/each}}
-                                        </select>
+                                    <div class="row">
+                                        <div class="col-md-5 col-md-offset-3">
+                                            <div style="color: #9e9e9e; font-size:1rem; font-weight: bold;">Operator</div>
+                                            <select onChange={{action (mut eclObject.operator) value="target.value"}} style="display: inline-block;">
+                                              {{#each model.operatorOptions as |opOption|}}
+                                                <option value={{opOption.value}} selected={{eq eclObject.operator opOption.value}}>{{opOption.name}}</option>
+                                              {{/each}}
+                                            </select>
+                                        </div>
                                     </div>
                                 {{/if}}
-                                <div class="col-md-6">
-                                    <div class="col-md-10 input-field">
-                                      <div style="color: #9e9e9e; font-size:1rem; font-weight: bold;">Type</div>
-                                      <select style="display: inline-block;">
-                                          {{#each model.eclOption as |option|}}
-                                            <option value={{option.value}} selected={{eq eclObject.ecl option.value}}>{{option.name}}</option>
-                                          {{/each}}
-                                        </select>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div>
+                                          <div style="color: #9e9e9e; font-size:1rem; font-weight: bold;">Type</div>
+                                          <select onChange={{action (mut eclObject.ecl) value="target.value"}} style="display: inline-block;">
+                                              {{#each model.eclOption as |option|}}
+                                                <option value={{option.value}} selected={{eq eclObject.ecl option.value}}>{{option.value}}</option>
+                                              {{/each}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div>
+                                            {{concept-listing filter=eclObject.focusConcept.fsn conceptId=eclObject.focusConcept.id value=eclObject.focusConcept.fsn  title='Focus Concept'}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a class="waves-effect waves-light btn green" {{action "addRefinement" (mut eclObject.refinements)}}>Add Refinement</a>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="col-md-10">
-                                        {{concept-listing filter=eclObject.focusConcept.fsn conceptId=eclObject.focusConcept.id value=eclObject.focusConcept.fsn  title='Focus Concept'}}
-                                    </div>
-                                </div>
+                                
+                                {{#if eclObject.refinements}}
+                                    {{#each eclObject.refinements as |refinement|}}
+                                
+                                        <div class="col-md-12 row" style="margin:20px; margin-left:0px;">
+                                            <div class="col-md-1">
+                                                <div>
+                                                  <div style="color: #9e9e9e; font-size:1rem; font-weight: bold;">Type</div>
+                                                  <select onChange={{action (mut refinement.type.ecl) value="target.value"}} style="display: inline-block;">
+                                                      {{#each model.eclOption as |option|}}
+                                                        <option value={{option.value}} selected={{eq refinement.type.ecl option.value}}>{{option.value}}</option>
+                                                      {{/each}}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div>
+                                                    {{concept-listing filter=refinement.type.fsn conceptId=refinement.type.id value=refinement.type.fsn  title='Attribute Type'}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div>
+                                                  <div style="color: #9e9e9e; font-size:1rem; font-weight: bold;">Type</div>
+                                                  <select onChange={{action (mut refinement.target.ecl) value="target.value"}} style="display: inline-block;">
+                                                      {{#each model.eclOption as |option|}}
+                                                        <option value={{option.value}} selected={{eq refinement.target.ecl option.value}}>{{option.value}}</option>
+                                                      {{/each}}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div>
+                                                    {{concept-listing filter=refinement.target.fsn conceptId=refinement.target.id value=refinement.target.fsn  title='Attribute Target'}}
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    {{/each}}
+                                {{else}}
+                                    
+                                {{/if}}
+                                
                             </div>
                         {{/each}}
-<!--
-                    <div class="col-md-12">
-                        <div class="col-md-5 col-md-offset-3 input-field">
-                              <div style="color: #9e9e9e; font-size:1rem; font-weight: bold;">Operator</div>
-                              <select name="gender" id="genderSelect" class="form-control">    
-                                <option value="null"></option>
-                                <option value="AND">AND</option>
-                                <option value="OR" selected>OR</option>
-                                <option value="MINUS">MINUS</option>
-                              </select>
-                            </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="col-md-10 input-field">
-                              <div style="color: #9e9e9e; font-size:1rem; font-weight: bold;">Type</div>
-                              <select name="gender" id="genderSelect" class="form-control">    
-                                <option value="null"></option>
-                                <option value="male" selected>Self</option>
-                                <option value="<<">Descendant of</option>
-                                <option value="female">Descendant of or self</option>
-                              </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="col-md-10">
-                            </div>
-                        </div>
-                    </div>
--->
-<!--
-                    <div class="col-md-6">
-                        <a class="waves-effect waves-light btn blue col-md-5 col-md-offset-3" {{action "addRefinement"}}>Add Refinement</a>
-                    </div>
-                    <div class="col-md-6">
-                        <a class="waves-effect waves-light btn blue col-md-5 col-md-offset-3" {{action "addAttrRefinement"}}>Add Attribute Refinement</a>
-                    </div>
--->
                 </div>
             </div>
 
             <div class="row col-md-12">
-                <a class="waves-effect waves-light btn green col-md-1 col-md-offset-3" {{action "saveSubset"}}>Save Subset</a>
+                <a class="waves-effect waves-light btn green col-md-2 col-md-offset-3" {{action "saveSubset"}}>Save Subset</a>
+                <div class="col-md-2">
+                    <a class="waves-effect waves-light btn green" {{action "addEclObject"}}>Add Additional Query</a>
+                </div>
             </div>
 
 
