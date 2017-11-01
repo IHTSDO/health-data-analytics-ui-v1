@@ -7,6 +7,16 @@
                     </div>
                         {{#each model.eclObjects as |eclObject|}}
                             <div class="col-md-12">
+                                {{#if eclObject.operator}}
+                                    <div class="col-md-6 col-md-offset-3">
+                                        <div style="color: #9e9e9e; font-size:1rem; font-weight: bold;">Operator</div>
+                                        <select style="display: inline-block;">
+                                          {{#each model.operatorOptions as |opOption|}}
+                                            <option value={{opOption.value}} selected={{eq eclObject.operator opOption.value}}>{{opOption.name}}</option>
+                                          {{/each}}
+                                        </select>
+                                    </div>
+                                {{/if}}
                                 <div class="col-md-6">
                                     <div class="col-md-10 input-field">
                                       <div style="color: #9e9e9e; font-size:1rem; font-weight: bold;">Type</div>

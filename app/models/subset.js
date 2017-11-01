@@ -7,5 +7,6 @@ export default DS.Model.extend({
 
     // Transient - created from eclModel
     eclObjects: DS.attr(),
-    eclOption: DS.attr()
+    eclOption: DS.attr(),
+    operatorOptions : DS.attr()
 });

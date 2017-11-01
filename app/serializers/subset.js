@@ -19,6 +19,20 @@ export default DS.JSONSerializer.extend(
                         value:'<<'
                     }
                 ];
+                item.operatorOptions = [
+                    {
+                        name:'Or',
+                        value:'OR'
+                    },
+                    {
+                        name:'And',
+                        value:'AND'
+                    },
+                    {
+                        name:'Minus',
+                        value:'MINUS'
+                    }
+                ]
                 if(item.eclModel !== null && item.eclModel !== "")
                     {
                         item.eclObjects = JSON.parse(item.eclModel);
