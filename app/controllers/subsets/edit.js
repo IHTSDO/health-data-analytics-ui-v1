@@ -99,14 +99,21 @@ export default Ember.Controller.extend({
                 eclModel : JSON.stringify(this.get("model.eclObjects")),
                 ecl : ecl
             }
+            this.get('ajax').delete('/health-analytics-api/subsets/' + this.get("model.id"))
+                .then(() => {
+                });
             this.get('ajax').post('/health-analytics-api/subsets',
                 {
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify(postData)
                 })
                 .then((result) => {
+                    this.store.deleteRecord(this.get('model'));
                     this.set('saving', false);
+                    this.transitionToRoute('subsets.edit', result.id);
                 });
+            
+            
         },
         deleteSubset() {
             this.set('saving', true);
