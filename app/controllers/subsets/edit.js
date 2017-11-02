@@ -124,6 +124,12 @@ export default Ember.Controller.extend({
             this.store.deleteRecord(this.get('model'));
             this.transitionToRoute('subsets');
         },
+        deleteRefinement(index, refinements) {
+            refinements.removeAt(index);
+        },
+        deleteFocusConcept(index, eclObjects) {
+            eclObjects.removeAt(index);
+        },
           updateValue(model) {
                console.log(model);
             model = event.target.value;

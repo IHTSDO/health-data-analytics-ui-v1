@@ -5,7 +5,7 @@
                       <div style="color: #9e9e9e; font-size:1rem; font-weight: bold;">Subset Name</div>
                       {{input id="name-input" class="form-control" value=model.name type="text"}}
                     </div>
-                        {{#each model.eclObjects as |eclObject|}}
+                        {{#each model.eclObjects as |eclObject index|}}
                             <div class="row col-md-12 eclGroup">
                                 {{#if eclObject.operator}}
                                     <div class="row">
@@ -17,7 +17,11 @@
                                               {{/each}}
                                             </select>
                                         </div>
+                                        <div class="col-md-1 col-md-offset-1">
+                                                <a class="waves-effect waves-light btn red" {{action "deleteFocusConcept" index model.eclObjects}}>Remove</a>
+                                            </div>
                                     </div>
+                                    
                                 {{/if}}
                                 <div class="row">
                                     <div class="col-md-1">
@@ -41,7 +45,7 @@
                                 </div>
                                 
                                 {{#if eclObject.refinements}}
-                                    {{#each eclObject.refinements as |refinement|}}
+                                    {{#each eclObject.refinements as |refinement index|}}
                                 
                                         <div class="col-md-12 row" style="margin:20px; margin-left:0px;">
                                             <div class="col-md-1">
@@ -73,6 +77,9 @@
                                                 <div>
                                                     {{concept-listing filter=refinement.target.fsn conceptId=refinement.target.id value=refinement.target.fsn  title='Attribute Target'}}
                                                 </div>
+                                            </div>
+                                            <div class="col-md-1 col-md-offset-1">
+                                                <a class="waves-effect waves-light btn red" {{action "deleteRefinement" index eclObject.refinements}}>Remove</a>
                                             </div>
                                             
                                         </div>
