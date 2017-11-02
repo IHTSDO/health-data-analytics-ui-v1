@@ -30,84 +30,87 @@ export default Ember.Component.extend({
     },
     actions: {
         autoComplete(param) {
-            if(param !== "" && param !== '*' && this.get('mrcmType') === null && (this.get('typeId') === null || this.get('typeId') === '*')) {
-                this.get('ajax').request('/health-analytics-api/concepts', {data: {prefix: param}})
-                    .then((result) => {
-                    var list = {};
-                    var any = {};
-                    any.fsn = "Any";
-                    any.id = "*";
-                    any.subset = true;
-                    var filteredSubsets = [];
-                    filteredSubsets.push(any);
-                    list.items= filteredSubsets.concat(result.items);
-                    this.set('filteredList', list);
-                });
-            }
-            else if(this.get('mrcmType') && this.get('parentId') === null || this.get('parentId') === '*'){
-                this.get('ajax').request('/snowowl/snomed-ct/v2/MAIN/concepts?ecl=%3C%20410662002&offset=0&limit=50&expand=fsn()')
-                    .then((result) => {
-                    var filteredAttrs = [];
-                    result.items.forEach(function(item){
-                        item.fsn = item.fsn.term;
-                        item.id = item.conceptId;
-                        if(item.fsn.toLowerCase().indexOf(param.toLowerCase()) !== -1){
-                            filteredAttrs.push(item);
-                        }
-                    });
-                    var list = {};
-                    var any = {};
-                    any.fsn = "Any";
-                    any.id = "*";
-                    any.subset = true;
-                    var filteredSubsets = [];
-                    filteredSubsets.push(any);
-                    list.items= filteredSubsets.concat(filteredAttrs);
-                    this.set('filteredList', list);
-                });
-            }
-            else if(this.get('mrcmTarget') && this.get('typeId') !== null && this.get('typeId') !== '*'){
-                this.get('ajax').request('/snowowl/snomed-ct/v2/mrcm/MAIN/attribute-values/'+this.get('typeId')+'?termPrefix='+ param + '*&expand=fsn()&offset=0&limit=50')
-                    .then((result) => {
-                    var filteredAttrs = [];
-                    result.items.forEach(function(item){
-                        item.fsn = item.fsn.term;
-                        if(item.fsn.toLowerCase().indexOf(param.toLowerCase()) !== -1){
-                            filteredAttrs.push(item);
-                        }
-                    });
-                    var list = {};
-                    var any = {};
-                    any.fsn = "Any";
-                    any.id = "*";
-                    any.subset = true;
-                    var filteredSubsets = [];
-                    filteredSubsets.push(any);
-                    list.items= filteredSubsets.concat(filteredAttrs);
-                    this.set('filteredList', list);
-                });
-            }
-            else if(this.get('mrcmType') && this.get('parentId')){
-                this.get('ajax').request('/snowowl/snomed-ct/v2/mrcm/MAIN/domain-attributes?parentIds=' + this.get('parentId') + '&expand=fsn()&offset=0&limit=50')
-                    .then((result) => {
-                    var filteredAttrs = [];
-                    result.items.forEach(function(item){
-                        item.fsn = item.fsn.term;
-                        if(item.fsn.toLowerCase().indexOf(param.toLowerCase()) !== -1){
-                            filteredAttrs.push(item);
-                        }
-                    });
-                    var list = {};
-                    var any = {};
-                    any.fsn = "Any";
-                    any.id = "*";
-                    any.subset = true;
-                    var filteredSubsets = [];
-                    filteredSubsets.push(any);
-                    list.items= filteredSubsets.concat(filteredAttrs);
-                    this.set('filteredList', list);
-                });
-            }
+            if(param.length >= 3)
+                {
+                    if(param !== "" && param !== '*' && this.get('mrcmType') === null && (this.get('typeId') === null || this.get('typeId') === '*')) {
+                        this.get('ajax').request('/health-analytics-api/concepts', {data: {prefix: param}})
+                            .then((result) => {
+                            var list = {};
+                            var any = {};
+                            any.fsn = "Any";
+                            any.id = "*";
+                            any.subset = true;
+                            var filteredSubsets = [];
+                            filteredSubsets.push(any);
+                            list.items= filteredSubsets.concat(result.items);
+                            this.set('filteredList', list);
+                        });
+                    }
+                    else if(this.get('mrcmType') && this.get('parentId') === null || this.get('parentId') === '*'){
+                        this.get('ajax').request('/health-analytics-api/concepts?ecQuery=%3C%20410662002&limit=50')
+                            .then((result) => {
+                            var filteredAttrs = [];
+                            result.items.forEach(function(item){
+                                if(item.fsn.toLowerCase().indexOf(param.toLowerCase()) !== -1){
+                                    filteredAttrs.push(item);
+                                }
+                            });
+                            var list = {};
+                            var any = {};
+                            any.fsn = "Any";
+                            any.id = "*";
+                            any.subset = true;
+                            var filteredSubsets = [];
+                            filteredSubsets.push(any);
+                            list.items= filteredSubsets.concat(filteredAttrs);
+                            this.set('filteredList', list);
+                        });
+                    }
+                    else if(this.get('mrcmTarget') && this.get('typeId') !== null && this.get('typeId') !== '*'){
+                        this.get('ajax').request('/mrcm/attribute-values/'+this.get('typeId')+'?termPrefix='+ param + '*&expand=fsn()&offset=0&limit=50')
+                            .then((result) => {
+                            var filteredAttrs = [];
+                            result.items.forEach(function(item){
+                                item.fsn = item.fsn.term;
+                                item.id = item.conceptId;
+                                if(item.fsn.toLowerCase().indexOf(param.toLowerCase()) !== -1){
+                                    filteredAttrs.push(item);
+                                }
+                            });
+                            var list = {};
+                            var any = {};
+                            any.fsn = "Any";
+                            any.id = "*";
+                            any.subset = true;
+                            var filteredSubsets = [];
+                            filteredSubsets.push(any);
+                            list.items= filteredSubsets.concat(filteredAttrs);
+                            this.set('filteredList', list);
+                        });
+                    }
+                    else if(this.get('mrcmType') && this.get('parentId')){
+                        this.get('ajax').request('/mrcm/domain-attributes?parentIds=' + this.get('parentId') + '&expand=fsn()&offset=0&limit=50')
+                            .then((result) => {
+                            var filteredAttrs = [];
+                            result.items.forEach(function(item){
+                                item.fsn = item.fsn.term;
+                                item.id = item.conceptId;
+                                if(item.fsn.toLowerCase().indexOf(param.toLowerCase()) !== -1){
+                                    filteredAttrs.push(item);
+                                }
+                            });
+                            var list = {};
+                            var any = {};
+                            any.fsn = "Any";
+                            any.id = "*";
+                            any.subset = true;
+                            var filteredSubsets = [];
+                            filteredSubsets.push(any);
+                            list.items= filteredSubsets.concat(filteredAttrs);
+                            this.set('filteredList', list);
+                        });
+                    }
+                }
             else {
                 this.set('filteredList').clear();
             }
