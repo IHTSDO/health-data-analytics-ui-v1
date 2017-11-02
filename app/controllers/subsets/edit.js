@@ -108,6 +108,15 @@ export default Ember.Controller.extend({
                     this.set('saving', false);
                 });
         },
+        deleteSubset() {
+            this.set('saving', true);
+            this.get('ajax').delete('/health-analytics-api/subsets/' + this.get("model.id"))
+                .then((result) => {
+                    this.set('saving', false);
+                });
+            this.store.deleteRecord(this.get('model'));
+            this.transitionToRoute('subsets');
+        },
           updateValue(model) {
                console.log(model);
             model = event.target.value;
