@@ -7,13 +7,3 @@ export default DS.RESTAdapter.extend({
         return Ember.String.dasherize(type) + 's';
     }
 });
-
-//export default DS.JSONAPIAdapter.extend({
-//  handleResponse(status, headers, payload, requestData) {
-//    if(status === 403) {
-//        var current = window.location;
-//        window.location.replace("https://ims.ihtsdotools.org/#/login?serviceReferer=" + current);
-//    }
-//    return this._super(...arguments);
-//  }
-//});

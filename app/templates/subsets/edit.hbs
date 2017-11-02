@@ -60,7 +60,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div>
-                                                    {{subset-concept-listing filter=refinement.type.fsn conceptId=refinement.type.id value=refinement.type.fsn  title='Attribute Type'}}
+                                                    {{subset-concept-listing mrcmType=true parentId=eclObject.focusConcept.id filter=refinement.type.fsn conceptId=refinement.type.id value=refinement.type.fsn  title='Attribute Type'}}
                                                 </div>
                                             </div>
                                             <div class="col-md-1">
@@ -75,7 +75,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div>
-                                                    {{subset-concept-listing filter=refinement.target.fsn conceptId=refinement.target.id value=refinement.target.fsn  title='Attribute Target'}}
+                                                    {{subset-concept-listing mrcmTarget=true filter=refinement.target.fsn typeId=refinement.type.id conceptId=refinement.target.id value=refinement.target.fsn  title='Attribute Target'}}
                                                 </div>
                                             </div>
                                             <div class="col-md-1 col-md-offset-1">
