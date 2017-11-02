@@ -110,6 +110,7 @@ export default Ember.Controller.extend({
                 .then((result) => {
                     this.store.deleteRecord(this.get('model'));
                     this.set('saving', false);
+                this.get('target.router').refresh();
                     this.transitionToRoute('subsets.edit', result.id);
                 });
             
@@ -120,8 +121,10 @@ export default Ember.Controller.extend({
             this.get('ajax').delete('/health-analytics-api/subsets/' + this.get("model.id"))
                 .then((result) => {
                     this.set('saving', false);
+                this.store.deleteRecord(this.get('model'));
+            this.get('target.router').refresh();
                 });
-            this.store.deleteRecord(this.get('model'));
+            
             this.transitionToRoute('subsets');
         },
         deleteRefinement(index, refinements) {
