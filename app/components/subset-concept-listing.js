@@ -9,14 +9,16 @@ export default Ember.Component.extend({
         this._super();
         let conceptId = this.get('conceptId');
         if (!Ember.isBlank(conceptId)) {
-            console.log("concept list component, fetching fsn " + conceptId);
-            this.get('ajax').request('/health-analytics-api/concepts/' + conceptId)
-                .then((concept) => {
-                    this.set('conceptFsn', concept.fsn);
-                })
-                .catch(() => {
-                    this.set('conceptFsn', conceptId);
-                });
+            if(conceptId !== '*'){
+                console.log("concept list component, fetching fsn " + conceptId);
+                this.get('ajax').request('/health-analytics-api/concepts/' + conceptId)
+                    .then((concept) => {
+                        this.set('conceptFsn', concept.fsn);
+                    })
+                    .catch(() => {
+                        this.set('conceptFsn', conceptId);
+                    });
+            }
         }
     },
     actions: {
