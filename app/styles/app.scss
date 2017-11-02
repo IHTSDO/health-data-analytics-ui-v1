@@ -62,4 +62,11 @@ main {
     padding:10px;
     margin:10px;
 }
+.overlay{
+    position:fixed; 
+    z-index: 200;
+}
+.conceptSearch{
+    margin-top: 15px;
+}
 @import "ember-bootstrap/bootstrap";

@@ -1,7 +1,7 @@
-<div class="input-field">
+<div class="input-field conceptSearch">
 {{input id=cssId class="autocomplete" value=conceptFsn key-up=(action 'autoComplete' conceptFsn)}}
     <label class="active" for="{{cssId}}">{{title}}</label>
-    <ul class="autocomplete-content dropdown-content">
+    <ul class="autocomplete-content dropdown-content overlay">
         {{#each filteredList.items as |item|}}
             {{#if item.subset}}
                 <li {{action 'choose' item}}><span class="subset">{{item.fsn}}</span></li>
