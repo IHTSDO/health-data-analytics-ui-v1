@@ -72,7 +72,6 @@ export default Ember.Component.extend({
                     var filteredAttrs = [];
                     result.items.forEach(function(item){
                         item.fsn = item.fsn.term;
-                        item.id = item.conceptId;
                         if(item.fsn.toLowerCase().indexOf(param.toLowerCase()) !== -1){
                             filteredAttrs.push(item);
                         }
@@ -94,7 +93,6 @@ export default Ember.Component.extend({
                     var filteredAttrs = [];
                     result.items.forEach(function(item){
                         item.fsn = item.fsn.term;
-                        item.id = item.conceptId;
                         if(item.fsn.toLowerCase().indexOf(param.toLowerCase()) !== -1){
                             filteredAttrs.push(item);
                         }

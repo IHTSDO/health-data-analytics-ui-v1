@@ -65,7 +65,7 @@ export default Ember.Controller.extend({
             var ecl = "";
             var eclObjects = this.get("model.eclObjects");
             eclObjects.forEach(function(item){
-                if(item.refinements.length > 0)
+                if(item.refinements.length > 0 && eclObjects.length > 1)
                     {
                         ecl = ecl + "(";
                     }
@@ -85,7 +85,7 @@ export default Ember.Controller.extend({
                     ecl = ecl + refinement.target.ecl + " ";
                     ecl = ecl + refinement.target.id;
                 });
-                if(item.refinements.length > 0)
+                if(item.refinements.length > 0 && eclObjects.length > 1)
                     {
                         ecl = ecl + ")";
                     }
@@ -122,10 +122,9 @@ export default Ember.Controller.extend({
                 .then((result) => {
                     this.set('saving', false);
                 this.store.deleteRecord(this.get('model'));
-            this.get('target.router').refresh();
                 });
             
-            this.transitionToRoute('subsets');
+            this.transitionToRoute('subsets', null);
         },
         deleteRefinement(index, refinements) {
             refinements.removeAt(index);

@@ -104,7 +104,6 @@ export default Ember.Controller.extend({
                     data: JSON.stringify(postData)
                 })
                 .then((result) => {
-                this.get('target.router').refresh();
                     this.set('saving', false);
                     this.transitionToRoute('subsets.edit', result.id);
                 });
