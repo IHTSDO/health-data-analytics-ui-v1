@@ -110,8 +110,7 @@ export default Ember.Controller.extend({
                 .then((result) => {
                     this.store.deleteRecord(this.get('model'));
                     this.set('saving', false);
-                this.get('target.router').refresh();
-                    this.transitionToRoute('subsets.edit', result.id);
+                    this.transitionToRoute('subsets.edit', this.get("model.id"));
                 });
             
             
@@ -124,7 +123,7 @@ export default Ember.Controller.extend({
                 this.store.deleteRecord(this.get('model'));
                 });
             
-            this.transitionToRoute('subsets', null);
+            this.transitionToRoute('subsets');
         },
         deleteRefinement(index, refinements) {
             refinements.removeAt(index);
