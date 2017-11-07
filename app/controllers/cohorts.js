@@ -57,7 +57,7 @@ export default Ember.Controller.extend({
                 primaryExposure = "<< " + primaryExposure;
             }
             postData = {
-                    primaryExposure:  {
+                    primaryCriterion:  {
                         "ecl": primaryExposure
                       },
                     inclusionCriteria: inclusionCriteriaData
