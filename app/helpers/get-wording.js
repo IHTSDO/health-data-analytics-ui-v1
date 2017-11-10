@@ -7,7 +7,7 @@ export function getWording(typeId, tense) {
             }
         else if(typeId[0] === "64572001" && typeId[1] === "and")
             {
-                return "developed"
+                return "had developed"
             }
         else if(typeId[0] === "64572001" && typeId[1] === "present")
             {
@@ -15,7 +15,7 @@ export function getWording(typeId, tense) {
             }
         else if(typeId[0] === "64572001" && typeId[1] === "verb")
             {
-                return "devloping"
+                return "developing"
             }
         else if(typeId[0] === "373873005" && typeId[1] === "past")
             {
@@ -23,7 +23,7 @@ export function getWording(typeId, tense) {
             }
         else if(typeId[0] === "373873005" && typeId[1] === "and")
             {
-                return "also took"
+                return "had taken"
             }
         else if(typeId[0] === "373873005" && typeId[1] === "present")
             {
@@ -35,7 +35,7 @@ export function getWording(typeId, tense) {
             }
         else if(typeId[0] === "71388002" && typeId[1] === "past")
             {
-                return "underwent"
+                return "had undergone"
             }
         else if(typeId[0] === "71388002" && typeId[1] === "and")
             {
@@ -49,7 +49,7 @@ export function getWording(typeId, tense) {
             {
                 return "undergoing"
             }
-        else{return "a"}
+        else{return ""}
 }
 
 export default Ember.Helper.helper(getWording);
