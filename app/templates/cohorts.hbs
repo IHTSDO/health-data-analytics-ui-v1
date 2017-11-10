@@ -8,17 +8,17 @@
             <h3>{{model.cohortData.totalElements}} Patients Matched</h3>
         </div>
     </div>
-    
+
     <div class="col-md-4">
          <div class="col-md-10 col-md-offset-1">
             <h3>Demographic:</h3>
         </div>
         <div class="col-md-10 col-md-offset-1 input-field" style="margin-bottom:10px;">
           <div style="color: #9e9e9e; font-size:1rem; font-weight: bold;">Gender</div>
-          <select name="gender" id="genderSelect" class="form-control">    
+          <select name="gender" id="genderSelect" class="form-control">
             <option value="null"></option>
             <option value="male">Male</option>
-            <option value="female" >Female</option>    
+            <option value="female" >Female</option>
           </select>
         </div>
         <div class="col-md-10 col-md-offset-1 input-field">
@@ -47,14 +47,14 @@
                 <select name="range" class="form-control" onChange={{action (mut refinement.limitation) value="target.value"}}>
                     <option value="64572001" selected>Disorder</option>
                     <option value="373873005">Product</option>
-                    <option value="71388002" >Procedure</option>    
+                    <option value="71388002" >Procedure</option>
                   </select>
             </div>
             <div class="col-md-7">
                 {{concept-listing filter=refinement.ecl value=refinement.ecl limitedRange=true conceptFsn=refinement.fsn typeId=refinement.limitation title='Inclusion Criteria'}}
             </div>
         {{/each}}
-        
+
         {{#if model.testOutcome}}
             <div class="eclGroup col-md-12">
                 <div class="col-md-9 col-md-offset-2  input-field">
@@ -65,7 +65,7 @@
                     <select name="range" class="form-control" onChange={{action (mut model.testOutcome.limitation) value="target.value"}}>
                         <option value="64572001" selected>Disorder</option>
                         <option value="373873005">Product</option>
-                        <option value="71388002" >Procedure</option>    
+                        <option value="71388002" >Procedure</option>
                       </select>
                 </div>
                 <div class="col-md-7">
@@ -79,7 +79,7 @@
                     <select name="range" class="form-control" onChange={{action (mut model.testVariable.limitation) value="target.value"}}>
                         <option value="64572001" selected>Disorder</option>
                         <option value="373873005">Product</option>
-                        <option value="71388002" >Procedure</option>    
+                        <option value="71388002" >Procedure</option>
                       </select>
                 </div>
                 <div class="col-md-7">
@@ -87,7 +87,7 @@
                 </div>
             </div>
         {{/if}}
-        
+
 
         <div class="row">
             <div class="col-md-3 col-md-offset-1">
@@ -110,12 +110,12 @@
         {{#unless loading}}
         {{#if model.cohortData.cohortTotal}}
             <div class="row col-md-12 text-center">
-                <h3>Of {{model.cohortData.patientTotal}} patients (this is only simulated data).</h3>
+                <h3>Of {{model.cohortData.patientTotalFormatted}} patients (this is only simulated data).</h3>
                 <h4>{{model.cohortData.cohortTotalFormatted}} had {{model.primaryFsn}} {{#each model.inclusionCriteria as | refinement |}} AND {{refinement.fsn}}{{/each}}</h4>
-                <h4>{{model.cohortData.hasTestVariableChanceOfOutcome}}% {{get-wording model.testVariable.limitation "past"}} {{model.testVariable.fsn}} ({{model.cohortData.hasTestVariableCountFormatted}} patients)</h4>
-                <h4>Of these {{model.cohortData.hasTestVariableHasOutcomeCountFormatted}}% {{get-wording model.testOutcome.limitation "and"}} {{model.testOutcome.fsn}} ({{model.cohortData.hasTestVariableHasOutcomeCountFormatted}} patients)</h4>
+                <h4>{{model.cohortData.hasTestVariablePercentage}}% {{get-wording model.testVariable.limitation "past"}} {{model.testVariable.fsn}} ({{model.cohortData.hasTestVariableCountFormatted}} patients)</h4>
+                <h4>Of these {{model.cohortData.hasTestVariableChanceOfOutcome}}% {{get-wording model.testOutcome.limitation "and"}} {{model.testOutcome.fsn}} ({{model.cohortData.hasTestVariableHasOutcomeCountFormatted}} patients)</h4>
                 <h4>Of the remaining {{model.cohortData.hasNotTestVariableCountFormatted}} patients who did not {{get-wording model.testOutcome.limitation "present"}} {{model.testOutcome.fsn}}, {{model.cohortData.hasNotTestVariableChanceOfOutcome}}% {{get-wording model.testOutcome.limitation "and"}} {{model.testOutcome.fsn}} ({{model.cohortData.hasNotTestVariableHasOutcomeCountFormatted}} patients)</h4>
-                <h4>The hazard ratio for {{get-wording model.testVariable.limitation "verb"}} {{model.testVariable.fsn}} and {{get-wording model.testOutcome.limitation "verb"}} {{model.testOutcome.fsn}} in this  cohort is {{model.cohortData.variableOutcomeHazardRatio}} times more likely.</h4>
+                <h4>The hazard ratio for {{get-wording model.testVariable.limitation "verb"}} {{model.testVariable.fsn}} and {{get-wording model.testOutcome.limitation "verb"}} {{model.testOutcome.fsn}} in this cohort is {{model.cohortData.variableOutcomeHazardRatio}} times more likely.</h4>
             </div>
         {{else}}
             <div class="section">
