@@ -20,8 +20,41 @@ export default Ember.Controller.extend({
             return conceptString;
         }
     },
-    
+    getWording : function (typeId, tense){
+        
+        
+    },
     actions: {
+        addQueryRefinement(model){
+            model.pushObject(
+                {
+                    "ecl": "",
+                    "has": true,
+                    "includeDaysInFuture": -1,
+                    "includeDaysInPast": -1,
+                    "limitation": "64572001",
+                    "fsn": ""
+                }
+            );
+        },
+        addTests(model){
+            var testOutcome = {
+                "ecl": "",
+                "has": true,
+                "includeDaysInFuture": -1,
+                "includeDaysInPast": 0,
+                "limitation": "64572001"
+              };
+            this.set('model.testOutcome', testOutcome);
+            var testVariable = {
+                "ecl": "",
+                "has": true,
+                "includeDaysInFuture": -1,
+                "includeDaysInPast": 0,
+                "limitation": "64572001"
+              }
+            this.set('model.testVariable', testVariable);
+        },
         fetchCohort() {
             this.set('loading', true);
             console.log(this.get('model'));
@@ -34,25 +67,29 @@ export default Ember.Controller.extend({
             }
 
             let inclusionCriteria = this.get('model.inclusionCriteria');
-            console.log("inclusionCriteria = " + inclusionCriteria);
 
-            let inclusionCriteriaData = null;
+            let inclusionCriteriaArray = [];
             let postData = null;
             if (Ember.isPresent(inclusionCriteria)) {
-                if(inclusionCriteria.indexOf("<<") === -1 && inclusionCriteria.indexOf(">>") === -1){
-                    inclusionCriteria = "<< " + inclusionCriteria;
-                }
-                inclusionCriteriaData = {
-                    ecl: this.toECL(inclusionCriteria),
-                };
-                if(this.get('model.includeDaysInPast') !== null && this.get('model.includeDaysInPast') !== undefined){
-                    inclusionCriteriaData.includeDaysInPast = this.get('model.includeDaysInPast');
-                }
-                if(this.get('model.includeDaysInFuture') !== null && this.get('model.includeDaysInFuture') !== undefined){
-                    inclusionCriteriaData.includeDaysInFuture = this.get('model.includeDaysInPast');
-                }
+                inclusionCriteria.forEach(function (item){
+                    var inclusionCriteriaData = {};
+                    if(item.ecl !== ""){
+                        if(item.ecl.indexOf("<<") === -1 && item.ecl.indexOf(">>") === -1){
+                            inclusionCriteriaData.ecl = "<< " + item.ecl;
+                        }
+                        if(item.includeDaysInPast !== null && item.includeDaysInPast !== undefined){
+                            inclusionCriteriaData.includeDaysInPast = item.includeDaysInPast;
+                            inclusionCriteriaData.includeDaysInFuture = item.includeDaysInPast;
+                        }
+                        inclusionCriteriaData.has = "true";
+                        inclusionCriteriaArray.push(inclusionCriteriaData);
+
+                    }
+                })
+                
             }
-            console.log("fetch cohort for " + primaryExposureECL + " with inclusionCriteria" + inclusionCriteriaData);
+            
+            console.log("fetch cohort for " + primaryExposureECL + " with inclusionCriteria" + inclusionCriteriaArray);
             if(primaryExposure.indexOf("<<") === -1 && primaryExposure.indexOf(">>") === -1){
                 primaryExposure = "<< " + primaryExposure;
             }
@@ -60,8 +97,9 @@ export default Ember.Controller.extend({
                     primaryCriterion:  {
                         "ecl": primaryExposure
                       },
-                    inclusionCriteria: inclusionCriteriaData
+                    additionalCriteria: inclusionCriteriaArray
                 };
+            
             if(this.get('model.gender') !== null && this.get('model.gender') !== undefined && this.get('model.gender').length !== 0){
                 postData.gender = this.get('model.gender').toUpperCase();
             }
@@ -71,14 +109,37 @@ export default Ember.Controller.extend({
             if(this.get('model.ageMax') !== null && this.get('model.ageMax') !== undefined){
                 postData.maxAge = this.get('model.ageMax');
             }
-            var data = 
-            this.get('ajax').post('/health-analytics-api/cohorts/select', {
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(postData)})
-                .then((result) => {
-                    this.set('loading', false);
-                    this.set('model.cohortData', result);
-                });
+            let testOutcome = this.get('model.testOutcome');
+            let testVariable = this.get('model.testVariable');
+            if (Ember.isPresent(testOutcome)) {
+                if(testOutcome.ecl.indexOf("<<") === -1 && testOutcome.ecl.indexOf(">>") === -1){
+                    Ember.set(testOutcome, 'ecl', "<< " + testOutcome.ecl);
+                }
+                if(testVariable.ecl.indexOf("<<") === -1 && testVariable.ecl.indexOf(">>") === -1){
+                    Ember.set(testVariable, 'ecl', "<< " + testVariable.ecl);
+                }
+                postData.testOutcome = testOutcome;
+                postData.testVariable = testVariable;
+                var data = 
+                    this.get('ajax').post('/health-analytics-api/cohorts/statistical-test', {
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(postData)})
+                        .then((result) => {
+                            this.set('loading', false);
+                            this.set('model.cohortData', result);
+                        });
+            }
+            else{
+                var data = 
+                    this.get('ajax').post('/health-analytics-api/cohorts/select', {
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(postData)})
+                        .then((result) => {
+                            this.set('loading', false);
+                            this.set('model.cohortData', result);
+                        });
+            }
+            
         },
         updateGender(){
             console.log(this);

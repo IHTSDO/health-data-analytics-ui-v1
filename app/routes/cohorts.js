@@ -8,7 +8,8 @@ export default Ember.Route.extend({
             ageMin: null,
             ageMax: null,
             primaryExposure: null,
-            inclusionCriteria: null,
+            inclusionCriteria: [
+            ],
             includeDaysInPast: null,
             includeDaysInFuture: null,
             cohortData: {

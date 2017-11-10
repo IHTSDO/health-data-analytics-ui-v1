@@ -33,25 +33,72 @@
             <h3>Primary Exposure:</h3>
         </div>
         <div class="col-md-10 col-md-offset-1">
-            {{concept-listing filter=model.primaryExposure value=model.primaryExposure  choose=(action 'fetchCohort') title='Primary Exposure' cssId="primaryExposure"}}
+            {{concept-listing filter=model.primaryExposure value=model.primaryExposure conceptFsn=model.primaryFsn title='Primary Exposure' cssId="primaryExposure"}}
         </div>
-        <div class="col-md-10 col-md-offset-1">
-            <h3>Refinement:</h3>
-        </div>
-        <div class="col-md-10 col-md-offset-1">
-            {{concept-listing filter=model.inclusionCriteria value=model.inclusionCriteria choose=(action 'fetchCohort') title='Inclusion Criteria' cssId="inclusionCriteria"}}
-        </div>
-        <div class="col-md-9 col-md-offset-2  input-field">
-            {{input id="includeDaysInPast-input" class="form-control" value=model.includeDaysInPast type="text"}}
-            <label for="includeDaysInPast-input" style="margin-left:14px;">Include days in past</label>
-        </div>
-        <div class="col-md-9 col-md-offset-2 input-field">
-            {{input id="includeDaysInFuture-input" class="form-control" value=model.includeDaysInFuture type="text"}}
-            <label for="includeDaysInFuture-input" style="margin-left:14px;">Include days in future</label>
-        </div>
+        {{#each model.inclusionCriteria as | refinement |}}
+            <div class="col-md-10 col-md-offset-1">
+                <h3>Refinement:</h3>
+            </div>
+            <div class="col-md-9 col-md-offset-2  input-field">
+                {{input class="form-control" value=refinement.includeDaysInPast type="text"}}
+                <label for="includeDaysInPast-input" style="margin-left:14px;">Include days</label>
+            </div>
+            <div class="col-md-3 col-md-offset-1">
+                <select name="range" class="form-control" onChange={{action (mut refinement.limitation) value="target.value"}}>
+                    <option value="64572001" selected>Disorder</option>
+                    <option value="373873005">Product</option>
+                    <option value="71388002" >Procedure</option>    
+                  </select>
+            </div>
+            <div class="col-md-7">
+                {{concept-listing filter=refinement.ecl value=refinement.ecl limitedRange=true conceptFsn=refinement.fsn typeId=refinement.limitation title='Inclusion Criteria'}}
+            </div>
+        {{/each}}
+        
+        {{#if model.testOutcome}}
+            <div class="eclGroup col-md-12">
+                <div class="col-md-9 col-md-offset-2  input-field">
+                    {{input class="form-control" value=model.testOutcome.includeDaysInFuture type="text"}}
+                    <label for="includeDaysInPast-input" style="margin-left:14px;">Then within</label>
+                </div>
+                <div class="col-md-3 col-md-offset-1">
+                    <select name="range" class="form-control" onChange={{action (mut model.testOutcome.limitation) value="target.value"}}>
+                        <option value="64572001" selected>Disorder</option>
+                        <option value="373873005">Product</option>
+                        <option value="71388002" >Procedure</option>    
+                      </select>
+                </div>
+                <div class="col-md-7">
+                    {{concept-listing filter=model.testOutcome.ecl value=model.testOutcome.ecl conceptFsn=model.testOutcome.fsn limitedRange=true typeId=model.testOutcome.limitation title='Inclusion Criteria'}}
+                </div>
+                <div class="col-md-9 col-md-offset-2  input-field">
+                    {{input class="form-control" value=model.testVariable.includeDaysInFuture type="text"}}
+                    <label for="includeDaysInPast-input" style="margin-left:14px;">Then within</label>
+                </div>
+                <div class="col-md-3 col-md-offset-1">
+                    <select name="range" class="form-control" onChange={{action (mut model.testVariable.limitation) value="target.value"}}>
+                        <option value="64572001" selected>Disorder</option>
+                        <option value="373873005">Product</option>
+                        <option value="71388002" >Procedure</option>    
+                      </select>
+                </div>
+                <div class="col-md-7">
+                    {{concept-listing filter=model.testVariable.ecl value=model.testVariable.ecl conceptFsn=model.testVariable.fsn limitedRange=true typeId=model.testVariable.limitation title='Inclusion Criteria'}}
+                </div>
+            </div>
+        {{/if}}
+        
 
-        <div class="col-md-12 text-center">
-            <a class="waves-effect waves-light btn btn-primary" {{action "fetchCohort"}}>Fetch Cohort</a>
+        <div class="row">
+            <div class="col-md-3 col-md-offset-1">
+                <a class="btn btn-primary green" {{action "addQueryRefinement" (mut model.inclusionCriteria)}}>Add Refinement</a>
+            </div>
+            <div class="col-md-3 col-md-offset-1">
+                <a class="btn btn-primary green" {{action "addTests" (mut model)}}>Add Test</a>
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn-primary" {{action "fetchCohort"}}>Fetch Cohort</a>
+            </div>
         </div>
     </div>
     <div class="col-md-8">
@@ -61,48 +108,58 @@
         </div>
         {{/if}}
         {{#unless loading}}
-        <div class="section">
-            {{#if model.cohortData.content}}
-                {{#if model.cohortData.last}}
-                    <h3>Displaying {{model.cohortData.totalElements}} Patients</h3>
-                {{else}}
-                    <h3>First 100 of {{model.cohortData.totalElements}} Patients</h3>
-                {{/if}}
-            <table class="striped hdad-table">
-                <thead>
-                <tr>
-                    <th>Role ID</th>
-                    <th>Sex</th>
-                    <th>DOB</th>
-                    <th>Encounter</th>
-                </tr>
-                </thead>
-                <tbody>
-                {{#each model.cohortData.content as |data|}}
-                    <tr  class="parent">
-                        <td>{{data.roleId}}</td>
-                        <td>{{data.gender}}</td>
-                        <td>{{data.dobFormated}}</td>
-                        <td>
-                        <ul>
-                        {{#each (sort-by "dateStamp" "primaryExposure:desc" "conceptTerm" data.encounters) as |encounter|}}
-                        <li>
-                            {{encounter.date}}, <span>{{encounter.conceptTerm}}</span> {{#if encounter.primaryExposure}}<b style="color:steelblue;">Primary Exposure</b>{{/if}}
-                        </li>
-                    {{/each}}
-                        </ul>
-                        </td>
+        {{#if model.cohortData.cohortTotal}}
+            <div class="row col-md-12 text-center">
+                <h3>Of {{model.cohortData.patientTotal}} patients (this is only simulated data).</h3>
+                <h4>{{model.cohortData.cohortTotalFormatted}} had {{model.primaryFsn}} {{#each model.inclusionCriteria as | refinement |}} AND {{refinement.fsn}}{{/each}}</h4>
+                <h4>{{model.cohortData.hasTestVariableChanceOfOutcome}}% {{get-wording model.testVariable.limitation "past"}} {{model.testVariable.fsn}} ({{model.cohortData.hasTestVariableCountFormatted}} patients)</h4>
+                <h4>Of these {{model.cohortData.hasTestVariableHasOutcomeCountFormatted}}% {{get-wording model.testOutcome.limitation "and"}} {{model.testOutcome.fsn}} ({{model.cohortData.hasTestVariableHasOutcomeCountFormatted}} patients)</h4>
+                <h4>Of the remaining {{model.cohortData.hasNotTestVariableCountFormatted}} patients who did not {{get-wording model.testOutcome.limitation "present"}} {{model.testOutcome.fsn}}, {{model.cohortData.hasNotTestVariableChanceOfOutcome}}% {{get-wording model.testOutcome.limitation "and"}} {{model.testOutcome.fsn}} ({{model.cohortData.hasNotTestVariableHasOutcomeCountFormatted}} patients)</h4>
+                <h4>The hazard ratio for {{get-wording model.testVariable.limitation "verb"}} {{model.testVariable.fsn}} and {{get-wording model.testOutcome.limitation "verb"}} {{model.testOutcome.fsn}} in this  cohort is {{model.cohortData.variableOutcomeHazardRatio}} times more likely.</h4>
+            </div>
+        {{else}}
+            <div class="section">
+                {{#if model.cohortData.content}}
+                    {{#if model.cohortData.last}}
+                        <h3>Displaying {{model.cohortData.totalElements}} Patients</h3>
+                    {{else}}
+                        <h3>First 100 of {{model.cohortData.totalElements}} Patients</h3>
+                    {{/if}}
+                <table class="striped hdad-table">
+                    <thead>
+                    <tr>
+                        <th>Role ID</th>
+                        <th>Sex</th>
+                        <th>DOB</th>
+                        <th>Encounter</th>
                     </tr>
-                {{/each}}
-                </tbody>
-            </table>
-            {{else}}
-                {{#if model.cohortData}}
-                    <h3>No results</h3>
+                    </thead>
+                    <tbody>
+                    {{#each model.cohortData.content as |data|}}
+                        <tr  class="parent">
+                            <td>{{data.roleId}}</td>
+                            <td>{{data.gender}}</td>
+                            <td>{{data.dobFormated}}</td>
+                            <td>
+                            <ul>
+                            {{#each (sort-by "dateStamp" "primaryExposure:desc" "conceptTerm" data.encounters) as |encounter|}}
+                            <li>
+                                {{encounter.date}}, <span>{{encounter.conceptTerm}}</span> {{#if encounter.primaryExposure}}<b style="color:steelblue;">Primary Exposure</b>{{/if}}
+                            </li>
+                        {{/each}}
+                            </ul>
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+                {{else}}
+                    {{#if model.cohortData}}
+                        <h3>No results</h3>
+                    {{/if}}
                 {{/if}}
-            {{/if}}
-
-        </div>
+            </div>
+        {{/if}}
         {{/unless}}
     </div>
 </div>

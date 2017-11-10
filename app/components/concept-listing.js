@@ -6,6 +6,8 @@ export default Ember.Component.extend({
     conceptId: null,
     subsets: null,
     filteredList: null,
+    limitedRange: null,
+    typeId: null,
     init: function() {
         this._super();
         let conceptId = this.get('conceptId');
@@ -40,19 +42,39 @@ export default Ember.Component.extend({
     actions: {
         autoComplete(param) {
             if(param !== "") {
-                this.get('ajax').request('/health-analytics-api/concepts', {data: {prefix: param}})
-                    .then((result) => {
-                    var list = {};
-                    var subsets = this.get('subsets');
-                    var filteredSubsets = [];
-                    subsets.forEach(function(item){
-                        if(item.fsn.toLowerCase().indexOf(param.toLowerCase()) !== -1){
-                            filteredSubsets.push(item);
-                        }
+                if(this.get('limitedRange')) {
+                    var range = '<<' + this.get('typeId');
+                    if(this.get('typeId') !== ""){
+                        this.get('ajax').request('/health-analytics-api/concepts', {data: {prefix: param, ecQuery: range}})
+                            .then((result) => {
+                            var list = {};
+                            var subsets = this.get('subsets');
+                            var filteredSubsets = [];
+                            subsets.forEach(function(item){
+                                if(item.fsn.toLowerCase().indexOf(param.toLowerCase()) !== -1){
+                                    filteredSubsets.push(item);
+                                }
+                            });
+                            list.items= filteredSubsets.concat(result.items);
+                            this.set('filteredList', list);
+                        });
+                    }
+                }
+                else{
+                    this.get('ajax').request('/health-analytics-api/concepts', {data: {prefix: param}})
+                        .then((result) => {
+                        var list = {};
+                        var subsets = this.get('subsets');
+                        var filteredSubsets = [];
+                        subsets.forEach(function(item){
+                            if(item.fsn.toLowerCase().indexOf(param.toLowerCase()) !== -1){
+                                filteredSubsets.push(item);
+                            }
+                        });
+                        list.items= filteredSubsets.concat(result.items);
+                        this.set('filteredList', list);
                     });
-                    list.items= filteredSubsets.concat(result.items);
-                    this.set('filteredList', list);
-                });
+                }
             }
             else {
                 this.set('filteredList').clear();
