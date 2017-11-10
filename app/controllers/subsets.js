@@ -60,7 +60,7 @@ export default Ember.Controller.extend({
 
                     }
                 ]
-            }
+            };
             var ecl = "";
             var eclObjects = newSubset.eclObjects;
             eclObjects.forEach(function(item){
@@ -97,7 +97,7 @@ export default Ember.Controller.extend({
                 name : newSubset.name,
                 eclModel : JSON.stringify(newSubset.eclObjects),
                 ecl : ecl
-            }
+            };
             this.get('ajax').post('/health-analytics-api/subsets',
                 {
                     contentType: 'application/json; charset=utf-8',

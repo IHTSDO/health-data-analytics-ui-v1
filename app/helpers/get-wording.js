@@ -1,55 +1,55 @@
 import Ember from 'ember';
 
-export function getWording(typeId, tense) {
+export function getWording(typeId) {
         if(typeId[0] === "64572001" && typeId[1] === "past")
             {
-                return "had"
+                return "had";
             }
         else if(typeId[0] === "64572001" && typeId[1] === "and")
             {
-                return "had developed"
+                return "had developed";
             }
         else if(typeId[0] === "64572001" && typeId[1] === "present")
             {
-                return "have"
+                return "have";
             }
         else if(typeId[0] === "64572001" && typeId[1] === "verb")
             {
-                return "developing"
+                return "developing";
             }
         else if(typeId[0] === "373873005" && typeId[1] === "past")
             {
-                return "took"
+                return "took";
             }
         else if(typeId[0] === "373873005" && typeId[1] === "and")
             {
-                return "had taken"
+                return "had taken";
             }
         else if(typeId[0] === "373873005" && typeId[1] === "present")
             {
-                return "take"
+                return "take";
             }
         else if(typeId[0] === "373873005" && typeId[1] === "verb")
             {
-                return "taking"
+                return "taking";
             }
         else if(typeId[0] === "71388002" && typeId[1] === "past")
             {
-                return "had undergone"
+                return "had undergone";
             }
         else if(typeId[0] === "71388002" && typeId[1] === "and")
             {
-                return "also underwent"
+                return "also underwent";
             }
         else if(typeId[0] === "71388002" && typeId[1] === "present")
             {
-                return "underwent"
+                return "underwent";
             }
         else if(typeId[0] === "71388002" && typeId[1] === "verb")
             {
-                return "undergoing"
+                return "undergoing";
             }
-        else{return ""}
+        else{return "";}
 }
 
 export default Ember.Helper.helper(getWording);

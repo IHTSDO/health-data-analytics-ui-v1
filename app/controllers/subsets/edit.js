@@ -98,7 +98,7 @@ export default Ember.Controller.extend({
                 name : this.get("model.name"),
                 eclModel : JSON.stringify(this.get("model.eclObjects")),
                 ecl : ecl
-            }
+            };
             this.get('ajax').delete('/health-analytics-api/subsets/' + this.get("model.id"))
                 .then(() => {
                 });

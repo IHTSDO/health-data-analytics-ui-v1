@@ -55,7 +55,7 @@ export default Ember.Controller.extend({
                 "includeDaysInFuture": -1,
                 "includeDaysInPast": 0,
                 "limitation": "64572001"
-              }
+              };
             this.set('model.testVariable', testVariable);
         },
         removeTests(model){
@@ -92,7 +92,7 @@ export default Ember.Controller.extend({
                         inclusionCriteriaArray.push(inclusionCriteriaData);
 
                     }
-                })
+                });
                 
             }
             
@@ -136,7 +136,7 @@ export default Ember.Controller.extend({
                             this.set('model.cohortData', result);
                             var firstData =
                                 [{"label":"Cohort Total", "value":result.hasTestVariableChanceOfOutcome}];
-                            var secondData = [{"label":"With Test Condition", "value":result.hasNotTestVariableChanceOfOutcome}]
+                            var secondData = [{"label":"With Test Condition", "value":result.hasNotTestVariableChanceOfOutcome}];
                             this.set('model.firstData', firstData);
                             this.set('model.secondData', secondData);
                         });
