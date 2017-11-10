@@ -52,8 +52,8 @@
             </div>
             <div class="col-md-3 col-md-offset-1">
                 <select name="range" class="form-control refinementDdl" onChange={{action (mut refinement.limitation) value="target.value"}}>
-                    <option value="64572001" selected>Disorder</option>
-                    <option value="373873005">Product</option>
+                    <option value="64572001">Disorder</option>
+                    <option value="373873005" selected>Product</option>
                     <option value="71388002" >Procedure</option>
                   </select>
             </div>
@@ -131,20 +131,104 @@
         {{#if model.cohortData.cohortTotal}}
             <div class="row col-md-12 text-center">
                 <h3>{{model.cohortData.patientTotalFormatted}} total patients (this is only simulated data).</h3>
-                <h4>{{model.cohortData.cohortTotalFormatted}} had {{model.primaryFsn}} {{#each model.inclusionCriteria as | refinement |}} AND {{refinement.fsn}}{{/each}}</h4>
+                <h4>{{model.cohortData.cohortTotalFormatted}} {{get-wording model.primaryLimitation "past"}} {{model.primaryFsn}} {{#each model.inclusionCriteria as | refinement |}} AND {{refinement.fsn}}{{/each}}</h4>
                 <h4>{{model.cohortData.hasTestVariablePercentage}}% {{get-wording model.testVariable.limitation "past"}} {{model.testVariable.fsn}} ({{model.cohortData.hasTestVariableCountFormatted}} patients)</h4>
-                <h4>Of these {{model.cohortData.hasTestVariableChanceOfOutcome}}% {{get-wording model.testOutcome.limitation "and"}} {{model.testOutcome.fsn}} ({{model.cohortData.hasTestVariableHasOutcomeCountFormatted}} patients)</h4>
-                <h4>Of the remaining {{model.cohortData.hasNotTestVariableCountFormatted}} patients who did not {{get-wording model.testOutcome.limitation "present"}} {{model.testOutcome.fsn}}, {{model.cohortData.hasNotTestVariableChanceOfOutcome}}% {{get-wording model.testOutcome.limitation "and"}} {{model.testOutcome.fsn}} ({{model.cohortData.hasNotTestVariableHasOutcomeCountFormatted}} patients)</h4>
+                <h4 style="color: #337ab7">Of these {{model.cohortData.hasTestVariableChanceOfOutcome}}% {{get-wording model.testOutcome.limitation "and"}} {{model.testOutcome.fsn}} ({{model.cohortData.hasTestVariableHasOutcomeCountFormatted}} patients)</h4>
+                <h4 style="color: #ff9800">Of the remaining {{model.cohortData.hasNotTestVariableCountFormatted}} patients who did not {{get-wording model.testOutcome.limitation "present"}} {{model.testOutcome.fsn}}, {{model.cohortData.hasNotTestVariableChanceOfOutcome}}% {{get-wording model.testVariable.limitation "and"}} {{model.testVariable.fsn}} ({{model.cohortData.hasNotTestVariableHasOutcomeCountFormatted}} patients)</h4>
                 <h4>The hazard ratio for {{get-wording model.testVariable.limitation "verb"}} {{model.testVariable.fsn}} after {{get-wording model.testOutcome.limitation "verb"}} {{model.testOutcome.fsn}} in this cohort is {{model.cohortData.variableOutcomeHazardRatio}} times more likely.</h4>
             </div>
-<!--
             <div class="col-md-12 text-center">
-                <h2>Cohort vs Primary Inclusion Criteria</h2>
-                <div class="chart-container">  
-                  {{bubble-chart data=model.graphData}}
-                </div> 
+                <div class="col-md-12" style="margin-top:80px;">
+                    <div class="col-md-6">
+                    <div class="chart" id="graph" data-percent={{model.cohortData.hasTestVariableChanceOfOutcome}}></div>
+                    <script>var el = document.getElementById('graph');
+
+                            var options = {
+                                percent:  el.getAttribute('data-percent') || 25,
+                                size: el.getAttribute('data-size') || 220,
+                                lineWidth: el.getAttribute('data-line') || 15,
+                                rotate: el.getAttribute('data-rotate') || 0
+                            }
+
+                            var canvas = document.createElement('canvas');
+                            var span = document.createElement('span');
+                            span.textContent = options.percent + '%';
+
+                            if (typeof(G_vmlCanvasManager) !== 'undefined') {
+                                G_vmlCanvasManager.initElement(canvas);
+                            }
+
+                            var ctx = canvas.getContext('2d');
+                            canvas.width = canvas.height = options.size;
+
+                            el.appendChild(span);
+                            el.appendChild(canvas);
+
+                            ctx.translate(options.size / 2, options.size / 2);
+                            ctx.rotate((-1 / 2 + options.rotate / 180) * Math.PI);
+                            
+                            var radius = (options.size - options.lineWidth) / 2;
+
+                            var drawCircle = function(color, lineWidth, percent) {
+                                    percent = Math.min(Math.max(0, percent || 1), 1);
+                                    ctx.beginPath();
+                                    ctx.arc(0, 0, radius, 0, Math.PI * 2 * percent, false);
+                                    ctx.strokeStyle = color;
+                                    ctx.lineCap = 'round';
+                                    ctx.lineWidth = lineWidth
+                                    ctx.stroke();
+                            };
+
+                            drawCircle('#efefef', options.lineWidth, 100 / 100);
+                            drawCircle('#337ab7', options.lineWidth, options.percent / 100);</script>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart" id="graph2" data-percent={{model.cohortData.hasNotTestVariableChanceOfOutcome}}></div>
+                        <script>var el = document.getElementById('graph2');
+
+                            var options = {
+                                percent:  el.getAttribute('data-percent') || 25,
+                                size: el.getAttribute('data-size') || 220,
+                                lineWidth: el.getAttribute('data-line') || 15,
+                                rotate: el.getAttribute('data-rotate') || 0
+                            }
+
+                            var canvas = document.createElement('canvas');
+                            var span = document.createElement('span');
+                            span.textContent = options.percent + '%';
+
+                            if (typeof(G_vmlCanvasManager) !== 'undefined') {
+                                G_vmlCanvasManager.initElement(canvas);
+                            }
+
+                            var ctx = canvas.getContext('2d');
+                            canvas.width = canvas.height = options.size;
+
+                            el.appendChild(span);
+                            el.appendChild(canvas);
+
+                            ctx.translate(options.size / 2, options.size / 2);
+                            ctx.rotate((-1 / 2 + options.rotate / 180) * Math.PI);
+
+                            var radius = (options.size - options.lineWidth) / 2;
+
+                            var drawCircle = function(color, lineWidth, percent) {
+                                    percent = Math.min(Math.max(0, percent || 1), 1);
+                                    ctx.beginPath();
+                                    ctx.arc(0, 0, radius, 0, Math.PI * 2 * percent, false);
+                                    ctx.strokeStyle = color;
+                                    ctx.lineCap = 'round';
+                                    ctx.lineWidth = lineWidth
+                                    ctx.stroke();
+                            };
+
+                            drawCircle('#efefef', options.lineWidth, 100 / 100);
+                            drawCircle('#ff9800', options.lineWidth, options.percent / 100);</script>
+                    </div>
+                
+                    
+                </div>
             </div>
--->
             
         {{else}}
             <div class="section">
