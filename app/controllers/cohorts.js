@@ -127,6 +127,10 @@ export default Ember.Controller.extend({
                         .then((result) => {
                             this.set('loading', false);
                             this.set('model.cohortData', result);
+                            var graphData =
+                                [{"label":"Cohort Total", "value":result.cohortTotal},
+ {"label":"With Test Condition", "value":result.hasTestVariableCount}];
+                            this.set('model.graphData', graphData)
                         });
             }
             else{

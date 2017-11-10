@@ -115,8 +115,17 @@
                 <h4>{{model.cohortData.hasTestVariablePercentage}}% {{get-wording model.testVariable.limitation "past"}} {{model.testVariable.fsn}} ({{model.cohortData.hasTestVariableCountFormatted}} patients)</h4>
                 <h4>Of these {{model.cohortData.hasTestVariableChanceOfOutcome}}% {{get-wording model.testOutcome.limitation "and"}} {{model.testOutcome.fsn}} ({{model.cohortData.hasTestVariableHasOutcomeCountFormatted}} patients)</h4>
                 <h4>Of the remaining {{model.cohortData.hasNotTestVariableCountFormatted}} patients who did not {{get-wording model.testOutcome.limitation "present"}} {{model.testOutcome.fsn}}, {{model.cohortData.hasNotTestVariableChanceOfOutcome}}% {{get-wording model.testOutcome.limitation "and"}} {{model.testOutcome.fsn}} ({{model.cohortData.hasNotTestVariableHasOutcomeCountFormatted}} patients)</h4>
-                <h4>The hazard ratio for {{get-wording model.testVariable.limitation "verb"}} {{model.testVariable.fsn}} and {{get-wording model.testOutcome.limitation "verb"}} {{model.testOutcome.fsn}} in this cohort is {{model.cohortData.variableOutcomeHazardRatio}} times more likely.</h4>
+                <h4>The hazard ratio for {{get-wording model.testVariable.limitation "verb"}} {{model.testVariable.fsn}} after {{get-wording model.testOutcome.limitation "verb"}} {{model.testOutcome.fsn}} in this cohort is {{model.cohortData.variableOutcomeHazardRatio}} times more likely.</h4>
             </div>
+<!--
+            <div class="col-md-12 text-center">
+                <h2>Cohort vs Primary Inclusion Criteria</h2>
+                <div class="chart-container">  
+                  {{bubble-chart data=model.graphData}}
+                </div> 
+            </div>
+-->
+            
         {{else}}
             <div class="section">
                 {{#if model.cohortData.content}}
