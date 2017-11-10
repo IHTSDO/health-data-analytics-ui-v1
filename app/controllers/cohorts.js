@@ -37,6 +37,9 @@ export default Ember.Controller.extend({
                 }
             );
         },
+        deleteRefinement(index, refinements) {
+            refinements.removeAt(index);
+        },
         addTests(model){
             var testOutcome = {
                 "ecl": "",
@@ -54,6 +57,10 @@ export default Ember.Controller.extend({
                 "limitation": "64572001"
               }
             this.set('model.testVariable', testVariable);
+        },
+        removeTests(model){
+            this.set('model.testOutcome', null);
+            this.set('model.testVariable', null);
         },
         fetchCohort() {
             this.set('loading', true);

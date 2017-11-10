@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
          <div class="col-md-10 col-md-offset-1">
             <h3>Demographic:</h3>
         </div>
@@ -32,19 +32,26 @@
         <div class="col-md-10 col-md-offset-1">
             <h3>Primary Exposure:</h3>
         </div>
-        <div class="col-md-10 col-md-offset-1">
-            {{concept-listing filter=model.primaryExposure value=model.primaryExposure conceptFsn=model.primaryFsn title='Primary Exposure' cssId="primaryExposure"}}
+        <div class="col-md-3 col-md-offset-1">
+                <select name="range" class="form-control refinementDdl" onChange={{action (mut model.primaryLimitation) value="target.value"}} style="display: inline-block;">
+                    <option value="64572001" selected>Disorder</option>
+                    <option value="373873005">Product</option>
+                    <option value="71388002" >Procedure</option>
+                  </select>
+            </div>
+        <div class="col-md-8">
+            {{concept-listing filter=model.primaryExposure value=model.primaryExposure limitedRange=true typeId=model.primaryLimitation conceptFsn=model.primaryFsn title='Primary Exposure' cssId="primaryExposure"}}
         </div>
-        {{#each model.inclusionCriteria as | refinement |}}
+        {{#each model.inclusionCriteria as | refinement index|}}
             <div class="col-md-10 col-md-offset-1">
                 <h3>Refinement:</h3>
             </div>
-            <div class="col-md-9 col-md-offset-2  input-field">
+            <div class="col-md-2 col-md-offset-2  input-field">
                 {{input class="form-control" value=refinement.includeDaysInPast type="text"}}
                 <label for="includeDaysInPast-input" style="margin-left:14px;">Include days</label>
             </div>
             <div class="col-md-3 col-md-offset-1">
-                <select name="range" class="form-control" onChange={{action (mut refinement.limitation) value="target.value"}}>
+                <select name="range" class="form-control refinementDdl" onChange={{action (mut refinement.limitation) value="target.value"}}>
                     <option value="64572001" selected>Disorder</option>
                     <option value="373873005">Product</option>
                     <option value="71388002" >Procedure</option>
@@ -52,6 +59,9 @@
             </div>
             <div class="col-md-7">
                 {{concept-listing filter=refinement.ecl value=refinement.ecl limitedRange=true conceptFsn=refinement.fsn typeId=refinement.limitation title='Inclusion Criteria'}}
+            </div>
+            <div class="col-md-1">
+                <a class="waves-effect waves-light btn red" {{action "deleteRefinement" index model.inclusionCriteria}}>Remove</a>
             </div>
         {{/each}}
 
@@ -62,7 +72,7 @@
                     <label for="includeDaysInPast-input" style="margin-left:14px;">Then within</label>
                 </div>
                 <div class="col-md-3 col-md-offset-1">
-                    <select name="range" class="form-control" onChange={{action (mut model.testOutcome.limitation) value="target.value"}}>
+                    <select name="range" class="form-control refinementDdl" onChange={{action (mut model.testOutcome.limitation) value="target.value"}}>
                         <option value="64572001" selected>Disorder</option>
                         <option value="373873005">Product</option>
                         <option value="71388002" >Procedure</option>
@@ -76,7 +86,7 @@
                     <label for="includeDaysInPast-input" style="margin-left:14px;">Then within</label>
                 </div>
                 <div class="col-md-3 col-md-offset-1">
-                    <select name="range" class="form-control" onChange={{action (mut model.testVariable.limitation) value="target.value"}}>
+                    <select name="range" class="form-control refinementDdl" onChange={{action (mut model.testVariable.limitation) value="target.value"}}>
                         <option value="64572001" selected>Disorder</option>
                         <option value="373873005">Product</option>
                         <option value="71388002" >Procedure</option>
@@ -93,15 +103,25 @@
             <div class="col-md-3 col-md-offset-1">
                 <a class="btn btn-primary green" {{action "addQueryRefinement" (mut model.inclusionCriteria)}}>Add Refinement</a>
             </div>
-            <div class="col-md-3 col-md-offset-1">
-                <a class="btn btn-primary green" {{action "addTests" (mut model)}}>Add Test</a>
-            </div>
-            <div class="col-md-3">
-                <a class="btn btn-primary" {{action "fetchCohort"}}>Fetch Cohort</a>
-            </div>
+            {{#if model.testOutcome}}
+                <div class="col-md-3 col-md-offset-1">
+                    <a class="btn btn-primary red" {{action "removeTests" (mut model)}}>Remove Test</a>
+                </div>
+                <div class="col-md-3">
+                    <a class="btn btn-primary" {{action "fetchCohort"}}>Run Test</a>
+                </div>
+            {{else}}
+                <div class="col-md-3 col-md-offset-1">
+                    <a class="btn btn-primary green" {{action "addTests" (mut model)}}>Add Test</a>
+                </div>
+                <div class="col-md-3">
+                    <a class="btn btn-primary" {{action "fetchCohort"}}>Fetch Cohort</a>
+                </div>
+            {{/if}}
+            
         </div>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6">
         {{#if loading}}
         <div class="text-center">
             <div class="custom-loader"></div>
@@ -110,7 +130,7 @@
         {{#unless loading}}
         {{#if model.cohortData.cohortTotal}}
             <div class="row col-md-12 text-center">
-                <h3>Of {{model.cohortData.patientTotalFormatted}} patients (this is only simulated data).</h3>
+                <h3>{{model.cohortData.patientTotalFormatted}} total patients (this is only simulated data).</h3>
                 <h4>{{model.cohortData.cohortTotalFormatted}} had {{model.primaryFsn}} {{#each model.inclusionCriteria as | refinement |}} AND {{refinement.fsn}}{{/each}}</h4>
                 <h4>{{model.cohortData.hasTestVariablePercentage}}% {{get-wording model.testVariable.limitation "past"}} {{model.testVariable.fsn}} ({{model.cohortData.hasTestVariableCountFormatted}} patients)</h4>
                 <h4>Of these {{model.cohortData.hasTestVariableChanceOfOutcome}}% {{get-wording model.testOutcome.limitation "and"}} {{model.testOutcome.fsn}} ({{model.cohortData.hasTestVariableHasOutcomeCountFormatted}} patients)</h4>

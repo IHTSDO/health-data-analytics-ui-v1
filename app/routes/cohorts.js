@@ -8,6 +8,7 @@ export default Ember.Route.extend({
             ageMin: null,
             ageMax: null,
             primaryExposure: null,
+            primaryLimitation: "64572001",
             inclusionCriteria: [
             ],
             includeDaysInPast: null,
