@@ -6,7 +6,7 @@
 
 	<groupId>org.ihtsdo.otf</groupId>
 	<artifactId>health-data-analytics-frontend</artifactId>
-	<version>0.31.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>SNOMED Health data analytics Ember frontend application</name>
 	<description>SNOMED Health data analytics Ember frontend application</description>
 	<url>https://test.ihtsdotools.org/</url>
