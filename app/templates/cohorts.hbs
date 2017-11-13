@@ -131,11 +131,11 @@
         {{#if model.cohortData.cohortTotal}}
             <div class="row col-md-12 text-center">
                 <h3>{{model.cohortData.patientTotalFormatted}} total patients (this is only simulated data).</h3>
-                <h4>{{model.cohortData.cohortTotalFormatted}} {{get-wording model.primaryLimitation "past"}} {{model.primaryFsn}} {{#each model.inclusionCriteria as | refinement |}} AND {{refinement.fsn}}{{/each}}</h4>
-                <h4>{{model.cohortData.hasTestVariablePercentage}}% {{get-wording model.testVariable.limitation "past"}} {{model.testVariable.fsn}} ({{model.cohortData.hasTestVariableCountFormatted}} patients)</h4>
-                <h4 style="color: #337ab7">Of these {{model.cohortData.hasTestVariableChanceOfOutcome}}% {{get-wording model.testOutcome.limitation "and"}} {{model.testOutcome.fsn}} ({{model.cohortData.hasTestVariableHasOutcomeCountFormatted}} patients)</h4>
-                <h4 style="color: #ff9800">Of the remaining {{model.cohortData.hasNotTestVariableCountFormatted}} patients who did not {{get-wording model.testOutcome.limitation "present"}} {{model.testOutcome.fsn}}, {{model.cohortData.hasNotTestVariableChanceOfOutcome}}% {{get-wording model.testVariable.limitation "and"}} {{model.testVariable.fsn}} ({{model.cohortData.hasNotTestVariableHasOutcomeCountFormatted}} patients)</h4>
-                <h4>The hazard ratio for {{get-wording model.testVariable.limitation "verb"}} {{model.testVariable.fsn}} after {{get-wording model.testOutcome.limitation "verb"}} {{model.testOutcome.fsn}} in this cohort is {{model.cohortData.variableOutcomeHazardRatio}} times more likely.</h4>
+                <h4>{{model.cohortData.cohortTotalFormatted}} {{get-wording model.primaryLimitation "past"}} {{strip-fsn model.primaryFsn}} {{#each model.inclusionCriteria as | refinement |}} AND {{strip-fsn refinement.fsn}}{{/each}}</h4>
+                <h4>{{model.cohortData.hasTestVariablePercentage}}% {{get-wording model.testVariable.limitation "past"}} {{strip-fsn model.testVariable.fsn}} ({{model.cohortData.hasTestVariableCountFormatted}} patients)</h4>
+                <h4 style="color: #337ab7">Of these {{model.cohortData.hasTestVariableChanceOfOutcome}}% {{get-wording model.testOutcome.limitation "and"}} {{strip-fsn model.testOutcome.fsn}} ({{model.cohortData.hasTestVariableHasOutcomeCountFormatted}} patients)</h4>
+                <h4 style="color: #ff9800">Of the remaining {{model.cohortData.hasNotTestVariableCountFormatted}} patients who did not {{get-wording model.testOutcome.limitation "present"}} {{strip-fsn model.testOutcome.fsn}}, {{model.cohortData.hasNotTestVariableChanceOfOutcome}}% {{get-wording model.testVariable.limitation "and"}} {{strip-fsn model.testVariable.fsn}} ({{model.cohortData.hasNotTestVariableHasOutcomeCountFormatted}} patients)</h4>
+                <h4>The hazard ratio for {{get-wording model.testVariable.limitation "verb"}} {{strip-fsn model.testVariable.fsn}} after {{get-wording model.testOutcome.limitation "verb"}} {{strip-fsn model.testOutcome.fsn}} in this cohort is {{model.cohortData.variableOutcomeHazardRatio}} times more likely.</h4>
             </div>
             <div class="col-md-12 text-center">
                 <div class="col-md-12" style="margin-top:80px;">
