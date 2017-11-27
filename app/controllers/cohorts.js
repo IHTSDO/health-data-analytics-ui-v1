@@ -30,8 +30,8 @@ export default Ember.Controller.extend({
                 {
                     "ecl": "",
                     "has": true,
-                    "includeDaysInFuture": -1,
-                    "includeDaysInPast": -1,
+                    "includeDaysInFuture": '*',
+                    "includeDaysInPast": '*',
                     "limitation": "64572001",
                     "fsn": ""
                 }
@@ -44,7 +44,7 @@ export default Ember.Controller.extend({
             var testOutcome = {
                 "ecl": "",
                 "has": true,
-                "includeDaysInFuture": -1,
+                "includeDaysInFuture": '*',
                 "includeDaysInPast": 0,
                 "limitation": "64572001"
               };
@@ -52,7 +52,7 @@ export default Ember.Controller.extend({
             var testVariable = {
                 "ecl": "",
                 "has": true,
-                "includeDaysInFuture": -1,
+                "includeDaysInFuture": '*',
                 "includeDaysInPast": 0,
                 "limitation": "64572001"
               };
@@ -85,6 +85,10 @@ export default Ember.Controller.extend({
                             inclusionCriteriaData.ecl = "<< " + item.ecl;
                         }
                         if(item.includeDaysInPast !== null && item.includeDaysInPast !== undefined){
+                            if(item.includeDaysInPast === '*'){
+                                inclusionCriteriaData.includeDaysInPast = -1;
+                                inclusionCriteriaData.includeDaysInFuture = -1;
+                            }
                             inclusionCriteriaData.includeDaysInPast = item.includeDaysInPast;
                             inclusionCriteriaData.includeDaysInFuture = item.includeDaysInPast;
                         }
@@ -119,6 +123,12 @@ export default Ember.Controller.extend({
             let testOutcome = this.get('model.testOutcome');
             let testVariable = this.get('model.testVariable');
             if (Ember.isPresent(testOutcome)) {
+                if(testOutcome.includeDaysInFuture === '*'){
+                                Ember.set(testOutcome, 'includeDaysInFuture', -1);
+                            }
+                if(testVariable.includeDaysInFuture === '*'){
+                                Ember.set(testVariable, 'includeDaysInFuture', -1);
+                            }
                 if(testOutcome.ecl.indexOf("<<") === -1 && testOutcome.ecl.indexOf(">>") === -1){
                     Ember.set(testOutcome, 'ecl', "<< " + testOutcome.ecl);
                 }
@@ -139,6 +149,12 @@ export default Ember.Controller.extend({
                             var secondData = [{"label":"With Test Condition", "value":result.hasNotTestVariableChanceOfOutcome}];
                             this.set('model.firstData', firstData);
                             this.set('model.secondData', secondData);
+                            if(testOutcome.includeDaysInFuture === -1){
+                                Ember.set(testOutcome, 'includeDaysInFuture', '*');
+                            }
+                            if(testVariable.includeDaysInFuture === -1){
+                                Ember.set(testVariable, 'includeDaysInFuture', '*');
+                            }
                         });
             }
             else{
