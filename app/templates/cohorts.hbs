@@ -46,9 +46,15 @@
             <div class="col-md-10 col-md-offset-1">
                 <h3>Refinement:</h3>
             </div>
-            <div class="col-md-2 col-md-offset-2  input-field">
+            <div class="col-md-2 col-md-offset-2 input-field">
                 {{input class="form-control" value=refinement.includeDaysInPast type="text"}}
-                <label for="includeDaysInPast-input" style="margin-left:14px;">Include days</label>
+                <label for="includeDaysInPast-input" style="margin-left:14px;" class="active">Include days</label>
+            </div>
+            <div class="col-md-2 col-md-offset-1">
+                <select name="has" class="form-control refinementDdl" onChange={{action (mut refinement.has) value="target.value"}}>
+                    <option value="true" selected>Has</option>
+                    <option value="false">Has not</option>
+                  </select>
             </div>
             <div class="col-md-3 col-md-offset-1">
                 <select name="range" class="form-control refinementDdl" onChange={{action (mut refinement.limitation) value="target.value"}}>
@@ -57,6 +63,7 @@
                     <option value="71388002" >Procedure</option>
                   </select>
             </div>
+            
             <div class="col-md-7">
                 {{concept-listing filter=refinement.ecl value=refinement.ecl limitedRange=true conceptFsn=refinement.fsn typeId=refinement.limitation title='Inclusion Criteria'}}
             </div>
@@ -69,7 +76,7 @@
             <div class="eclGroup col-md-12">
                 <div class="col-md-9 col-md-offset-2  input-field">
                     {{input class="form-control" value=model.testOutcome.includeDaysInFuture type="text"}}
-                    <label for="includeDaysInPast-input" style="margin-left:14px;">Then within</label>
+                    <label for="includeDaysInPast-input" style="margin-left:14px;" class="active">Then within</label>
                 </div>
                 <div class="col-md-3 col-md-offset-1">
                     <select name="range" class="form-control refinementDdl" onChange={{action (mut model.testOutcome.limitation) value="target.value"}}>
@@ -83,7 +90,7 @@
                 </div>
                 <div class="col-md-9 col-md-offset-2  input-field">
                     {{input class="form-control" value=model.testVariable.includeDaysInFuture type="text"}}
-                    <label for="includeDaysInPast-input" style="margin-left:14px;">Then within</label>
+                    <label for="includeDaysInPast-input" style="margin-left:14px;" class="active">Then within</label>
                 </div>
                 <div class="col-md-3 col-md-offset-1">
                     <select name="range" class="form-control refinementDdl" onChange={{action (mut model.testVariable.limitation) value="target.value"}}>

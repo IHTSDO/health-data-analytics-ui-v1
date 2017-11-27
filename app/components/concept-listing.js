@@ -49,6 +49,7 @@ export default Ember.Component.extend({
                             .then((result) => {
                             var list = {};
                             var subsets = this.get('subsets');
+                            console.log(subsets);
                             var filteredSubsets = [];
                             subsets.forEach(function(item){
                                 if(item.fsn.toLowerCase().indexOf(param.toLowerCase()) !== -1){

@@ -88,7 +88,7 @@ export default Ember.Controller.extend({
                             inclusionCriteriaData.includeDaysInPast = item.includeDaysInPast;
                             inclusionCriteriaData.includeDaysInFuture = item.includeDaysInPast;
                         }
-                        inclusionCriteriaData.has = "true";
+                        inclusionCriteriaData.has = item.has;
                         inclusionCriteriaArray.push(inclusionCriteriaData);
 
                     }
