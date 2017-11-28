@@ -94,23 +94,24 @@ export default Ember.Controller.extend({
             
             this.set('saving', true);
             var postData = {
+                id : this.get("model.id"),
                 description : this.get("model.name"),
                 name : this.get("model.name"),
                 eclModel : JSON.stringify(this.get("model.eclObjects")),
                 ecl : ecl
             };
-            this.get('ajax').delete('/health-analytics-api/subsets/' + this.get("model.id"))
-                .then(() => {
-                });
-            this.get('ajax').post('/health-analytics-api/subsets',
+//            this.get('ajax').delete('/health-analytics-api/subsets/' + this.get("model.id"))
+//                .then(() => {
+//                });
+            this.get('ajax').put('/health-analytics-api/subsets/' + this.get("model.id"),
                 {
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify(postData)
                 })
                 .then((result) => {
-                    this.store.deleteRecord(this.get('model'));
+                    //this.store.deleteRecord(this.get('model'));
                     this.set('saving', false);
-                    this.transitionToRoute('subsets.edit', this.get("model.id"));
+                    //this.transitionToRoute('subsets.edit', this.get("model.id"));
                 });
             
             

@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import {isAjaxError, isNotFoundError, isForbiddenError} from 'ember-ajax/errors';
 
 export default Ember.Component.extend({
     ajax: Ember.inject.service(),
@@ -65,7 +66,28 @@ export default Ember.Component.extend({
                             list.items= filteredSubsets.concat(filteredAttrs);
                             console.log(list);
                             this.set('filteredList', list);
-                        });
+                        }).catch(function(response, jqXHR, payload) {
+                            console.log(response);
+                            if (isNotFoundError(error)) {
+                              // handle 404 errors here
+                              return;
+                            }
+
+                            if (isForbiddenError(error)) {
+                                console.log('403');
+                              // handle 403 errors here
+                              return;
+                            }
+
+                            if(isAjaxError(error)) {
+                                console.log('broken');
+                              // handle all other AjaxErrors here
+                              return;
+                            }
+
+                            // other errors are handled elsewhere
+                            throw error;
+                          });
                     }
                     else if(this.get('mrcmTarget') && this.get('typeId') !== null && this.get('typeId') !== '*'){
                         this.get('ajax').request('/mrcm/attribute-values/'+this.get('typeId')+'?termPrefix='+ param + '*&expand=fsn()&offset=0&limit=50')
@@ -110,7 +132,16 @@ export default Ember.Component.extend({
                             list.items= filteredSubsets.concat(filteredAttrs);
                             console.log(list);
                             this.set('filteredList', list);
-                        });
+                        }).catch(function(error) {
+                            if (isForbiddenError(error)) {
+                                location.href = 'https://dev-ims.ihtsdotools.org/#';
+                                console.log('403');
+                              // handle 403 errors here
+                              return;
+                            }
+                            // other errors are handled elsewhere
+                            throw error;
+                          });
                     }
                 }
             else {
