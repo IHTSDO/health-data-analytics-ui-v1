@@ -86,8 +86,8 @@ export default Ember.Controller.extend({
                         }
                         if(item.includeDaysInPast !== null && item.includeDaysInPast !== undefined){
                             if(item.includeDaysInPast === '*'){
-                                inclusionCriteriaData.includeDaysInPast = -1;
-                                inclusionCriteriaData.includeDaysInFuture = -1;
+                                Ember.set(item, 'includeDaysInFuture', -1);
+                                Ember.set(item, 'includeDaysInPast', -1);
                             }
                             inclusionCriteriaData.includeDaysInPast = item.includeDaysInPast;
                             inclusionCriteriaData.includeDaysInFuture = item.includeDaysInPast;
@@ -163,7 +163,21 @@ export default Ember.Controller.extend({
                         contentType: 'application/json; charset=utf-8',
                         data: JSON.stringify(postData)})
                         .then((result) => {
-                            this.set('loading', false);
+                            inclusionCriteria.forEach(function (item){
+                                var inclusionCriteriaData = {};
+                                    if(item.includeDaysInPast !== null && item.includeDaysInPast !== undefined){
+                                        if(item.includeDaysInPast === -1){
+                                            Ember.set(item, 'includeDaysInFuture', '*');
+                                            Ember.set(item, 'includeDaysInPast', '*');
+                                        }
+                                        inclusionCriteriaData.includeDaysInPast = item.includeDaysInPast;
+                                        inclusionCriteriaData.includeDaysInFuture = item.includeDaysInPast;
+                                    }
+                                    inclusionCriteriaData.has = item.has;
+                                    inclusionCriteriaArray.push(inclusionCriteriaData);
+                            });
+                            
+                            this.set('loading', false); 
                             this.set('model.cohortData', result);
                         });
             }
