@@ -84,6 +84,9 @@ export default Ember.Controller.extend({
                         if(item.ecl.indexOf("<<") === -1 && item.ecl.indexOf(">>") === -1){
                             inclusionCriteriaData.ecl = "<< " + item.ecl;
                         }
+                        else{
+                            inclusionCriteriaData.ecl = item.ecl;
+                        }
                         if(item.includeDaysInPast !== null && item.includeDaysInPast !== undefined){
                             if(item.includeDaysInPast === '*'){
                                 Ember.set(item, 'includeDaysInFuture', -1);
@@ -165,6 +168,7 @@ export default Ember.Controller.extend({
                         .then((result) => {
                             inclusionCriteria.forEach(function (item){
                                 var inclusionCriteriaData = {};
+                                console.log(item);
                                     if(item.includeDaysInPast !== null && item.includeDaysInPast !== undefined){
                                         if(item.includeDaysInPast === -1){
                                             Ember.set(item, 'includeDaysInFuture', '*');
