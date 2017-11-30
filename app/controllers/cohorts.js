@@ -1,8 +1,10 @@
 import Ember from 'ember';
+import {isAjaxError, isNotFoundError, isForbiddenError, isServerError} from 'ember-ajax/errors';
 
 export default Ember.Controller.extend({
     ajax: Ember.inject.service(),
     loading: false,
+    error: false,
     init: function() {
         this._super();
         this.get('ajax').request('health-analytics-api/stats')
@@ -64,6 +66,7 @@ export default Ember.Controller.extend({
         },
         fetchCohort() {
             this.set('loading', true);
+            this.set('error', false); 
             console.log(this.get('model'));
             var gender;
             let primaryExposure = this.get('model.primaryExposure');
@@ -147,18 +150,22 @@ export default Ember.Controller.extend({
                         .then((result) => {
                             this.set('loading', false);
                             this.set('model.cohortData', result);
-                            var firstData =
-                                [{"label":"Cohort Total", "value":result.hasTestVariableChanceOfOutcome}];
-                            var secondData = [{"label":"With Test Condition", "value":result.hasNotTestVariableChanceOfOutcome}];
-                            this.set('model.firstData', firstData);
-                            this.set('model.secondData', secondData);
                             if(testOutcome.includeDaysInFuture === -1){
                                 Ember.set(testOutcome, 'includeDaysInFuture', '*');
                             }
                             if(testVariable.includeDaysInFuture === -1){
                                 Ember.set(testVariable, 'includeDaysInFuture', '*');
                             }
-                        });
+                        }).catch(function(error) {
+                            if (isServerError(error)) {
+                                this.set('loading', false); 
+                                this.set('error', 'There has been a problem with your request - please check your input.');
+                              // handle 5xx errors here
+                              return;
+                            }
+                            // other errors are handled elsewhere
+                            throw error;
+                          });
             }
             else{
                 var data = 
@@ -183,7 +190,16 @@ export default Ember.Controller.extend({
                             
                             this.set('loading', false); 
                             this.set('model.cohortData', result);
-                        });
+                        }).catch(function(error) {
+                            if (isServerError(error)) {
+                                this.set('loading', false); 
+                                this.set('error', 'There has been a problem with your request - please check your input.');
+                              // handle 5xx errors here
+                              return;
+                            }
+                            // other errors are handled elsewhere
+                            throw error;
+                          });
             }
             
         },

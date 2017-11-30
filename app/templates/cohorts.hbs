@@ -141,6 +141,11 @@
         </div>
         {{/if}}
         {{#unless loading}}
+        {{#if error}}
+            <div class="row col-md-12 text-center red">
+                <h3>{{error}}</h3>
+            </div>
+        {{/if}}
         {{#if model.cohortData.cohortTotal}}
             <div class="row col-md-12 text-center">
                 <h3>{{model.cohortData.patientTotalFormatted}} total patients (this is only simulated data).</h3>
