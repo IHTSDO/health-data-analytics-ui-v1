@@ -128,6 +128,8 @@ export default Ember.Controller.extend({
             }
             let testOutcome = this.get('model.testOutcome');
             let testVariable = this.get('model.testVariable');
+            var loading = this.get('loading');
+            var error = this.get('error');
             if (Ember.isPresent(testOutcome)) {
                 if(testOutcome.includeDaysInFuture === '*'){
                                 Ember.set(testOutcome, 'includeDaysInFuture', -1);
@@ -158,8 +160,8 @@ export default Ember.Controller.extend({
                             }
                         }).catch(function(error) {
                             if (isServerError(error)) {
-                                this.set('loading', false); 
-                                this.set('error', 'There has been a problem with your request - please check your input.');
+                                loading = false;
+                                error = 'There has been a problem with your request - please check your input.';
                               // handle 5xx errors here
                               return;
                             }
@@ -192,15 +194,18 @@ export default Ember.Controller.extend({
                             this.set('model.cohortData', result);
                         }).catch(function(error) {
                             if (isServerError(error)) {
-                                this.set('loading', false); 
-                                this.set('error', 'There has been a problem with your request - please check your input.');
+                                Ember.set(loading, false);
+                                Ember.set(error, 'There has been a problem with your request - please check your input.');
                               // handle 5xx errors here
                               return;
                             }
                             // other errors are handled elsewhere
                             throw error;
                           });
+                this.set('loading', loading); 
+            this.set('error', error);
             }
+            
             
         },
         updateGender(){

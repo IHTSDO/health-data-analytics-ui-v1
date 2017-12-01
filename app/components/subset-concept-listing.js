@@ -74,7 +74,7 @@ export default Ember.Component.extend({
                             }
 
                             if (isForbiddenError(error)) {
-                                console.log('403');
+                                location.href = '/login?serviceReferer=' + encodeURI(location.href);
                               // handle 403 errors here
                               return;
                             }
@@ -95,7 +95,7 @@ export default Ember.Component.extend({
                             var filteredAttrs = [];
                             result.items.forEach(function(item){
                                 item.fsn = item.fsn.term;
-                                item.id = item.conceptId;
+                                item.id = item.id;
                                 if(item.fsn.toLowerCase().indexOf(param.toLowerCase()) !== -1){
                                     filteredAttrs.push(item);
                                 }
@@ -134,8 +134,7 @@ export default Ember.Component.extend({
                             this.set('filteredList', list);
                         }).catch(function(error) {
                             if (isForbiddenError(error)) {
-                                location.href = 'https://dev-ims.ihtsdotools.org/#';
-                                console.log('403');
+                                location.href = '/login?serviceReferer=' + encodeURI(location.href);
                               // handle 403 errors here
                               return;
                             }
