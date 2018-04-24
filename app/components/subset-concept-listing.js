@@ -48,7 +48,7 @@ export default Ember.Component.extend({
                         });
                     }
                     else if(this.get('mrcmType') && this.get('parentId') === null || this.get('parentId') === '*'){
-                        this.get('ajax').request('/health-analytics-api/concepts?ecQuery=%3C%20410662002&limit=50')
+                        this.get('ajax').request('/health-analytics-api/concepts?ecQuery=%3C%20410662002&limit=200')
                             .then((result) => {
                             var filteredAttrs = [];
                             result.items.forEach(function(item){
