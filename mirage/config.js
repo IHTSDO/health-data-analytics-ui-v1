@@ -1,6 +1,5 @@
 export default function() {
-    enabled: false
-
+  enabled: false
   // These comments are here to help you get started. Feel free to delete them.
 
   /*
@@ -24,6 +23,6 @@ export default function() {
 
     http://www.ember-cli-mirage.com/docs/v0.2.x/shorthands/
   */
-   this.passthrough();
-   this.passthrough('/snowowl/');
+  this.passthrough();
+  this.passthrough('/snowowl/');
 }
