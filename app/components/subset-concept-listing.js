@@ -46,8 +46,8 @@ export default Ember.Component.extend({
                                 scope.set('filteredList', list);
                             });
                         }
-                        else if(this.get('mrcmType') && this.get('parentId') === null || this.get('parentId') === '*'){
-                            this.get('ajax').request('/health-analytics-api/concepts?ecQuery=%3C%20410662002&limit=50')
+                        else if(scope.get('mrcmType') && scope.get('parentId') === null || scope.get('parentId') === '*'){
+                            scope.get('ajax').request('/health-analytics-api/concepts?ecQuery=%3C%20410662002&limit=50')
                                 .then((result) => {
                                 var filteredAttrs = [];
                                 result.items.forEach(function(item){
@@ -64,7 +64,7 @@ export default Ember.Component.extend({
                                 filteredSubsets.push(any);
                                 list.items= filteredSubsets.concat(filteredAttrs);
                                 console.log(list);
-                                this.set('filteredList', list);
+                                scope.set('filteredList', list);
                             }).catch(function(response, jqXHR, payload) {
                                 console.log(response);
                                 if (isNotFoundError(error)) {
@@ -88,8 +88,8 @@ export default Ember.Component.extend({
                                 throw error;
                               });
                         }
-                        else if(this.get('mrcmTarget') && this.get('typeId') !== null && this.get('typeId') !== '*'){
-                            this.get('ajax').request('/mrcm/attribute-values/'+this.get('typeId')+'?termPrefix='+ param + '*&expand=fsn()&offset=0&limit=50')
+                        else if(scope.get('mrcmTarget') && scope.get('typeId') !== null && scope.get('typeId') !== '*'){
+                            scope.get('ajax').request('/mrcm/attribute-values/'+scope.get('typeId')+'?termPrefix='+ param + '*&expand=fsn()&offset=0&limit=50')
                                 .then((result) => {
                                 var filteredAttrs = [];
                                 result.items.forEach(function(item){
@@ -107,11 +107,11 @@ export default Ember.Component.extend({
                                 var filteredSubsets = [];
                                 filteredSubsets.push(any);
                                 list.items= filteredSubsets.concat(filteredAttrs);
-                                this.set('filteredList', list);
+                                scope.set('filteredList', list);
                             });
                         }
-                        else if(this.get('mrcmType') && this.get('parentId')){
-                            this.get('ajax').request('/mrcm/domain-attributes?parentIds=' + this.get('parentId') + '&expand=fsn()&offset=0&limit=50')
+                        else if(scope.get('mrcmType') && scope.get('parentId')){
+                            scope.get('ajax').request('/mrcm/domain-attributes?parentIds=' + scope.get('parentId') + '&expand=fsn()&offset=0&limit=50')
                                 .then((result) => {
                                 var filteredAttrs = [];
                                 result.items.forEach(function(item){
@@ -130,7 +130,7 @@ export default Ember.Component.extend({
                                 filteredSubsets.push(any);
                                 list.items= filteredSubsets.concat(filteredAttrs);
                                 console.log(list);
-                                this.set('filteredList', list);
+                                scope.set('filteredList', list);
                             }).catch(function(error) {
                                 if (isForbiddenError(error)) {
                                     location.href = '/login?serviceReferer=' + encodeURI(location.href);
