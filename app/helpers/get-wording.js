@@ -1,12 +1,29 @@
 import Ember from 'ember';
 
 export function getWording(typeId) {
+        var finding = "404684003";
         var disorder = "64572001";
         var product = "373873005";
         var procedure = "71388002";
         var conceptType = typeId[0];
         var useType = typeId[1];
-        if(conceptType === disorder && useType === "past")
+        if(conceptType === finding && useType === "past")
+            {
+                return "had finding";
+            }
+        else if(conceptType === finding && useType === "and")
+            {
+                return "developed finding";
+            }
+        else if(conceptType === finding && useType === "present")
+            {
+                return "have finding";
+            }
+        else if(conceptType === finding && useType === "verb")
+            {
+                return "developing finding";
+            }
+        else if(conceptType === disorder && useType === "past")
             {
                 return "had";
             }
