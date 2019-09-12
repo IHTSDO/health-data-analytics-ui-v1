@@ -89,7 +89,7 @@ export default Ember.Component.extend({
                               });
                         }
                         else if(scope.get('mrcmTarget') && scope.get('typeId') !== null && scope.get('typeId') !== '*'){
-                            scope.get('ajax').request('/mrcm/attribute-values/'+scope.get('typeId')+'?termPrefix='+ param + '*&expand=fsn()&offset=0&limit=50')
+                            scope.get('ajax').request('/mrcm/attribute-values/'+scope.get('typeId')+'?termPrefix='+ param + '&expand=fsn()&offset=0&limit=50')
                                 .then((result) => {
                                 var filteredAttrs = [];
                                 result.items.forEach(function(item){
