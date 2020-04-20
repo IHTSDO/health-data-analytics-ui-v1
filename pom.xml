@@ -44,12 +44,6 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>bower install</id>
-                        <goals>
-                            <goal>bower</goal>
-                        </goals>
-                    </execution>
-                    <execution>
                         <id>ember build</id>
                         <goals>
                             <goal>ember</goal>
