@@ -44,6 +44,16 @@
                         </goals>
                     </execution>
                     <execution>
+                        <id>ember cli</id>
+                        <goals>
+                            <goal>ember</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>install ember-cli-mirage</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>ember build</id>
                         <goals>
                             <goal>ember</goal>
