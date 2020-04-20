@@ -52,7 +52,7 @@
                     <execution>
                         <id>ember build</id>
                         <goals>
-                            <goal>ember-build</goal>
+                            <goal>ember</goal>
                         </goals>
                         <phase>generate-resources</phase>
                         <configuration>
