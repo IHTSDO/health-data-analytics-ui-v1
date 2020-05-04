@@ -15,8 +15,7 @@ export default Ember.Route.extend({
             includeDaysInFuture: null,
             cohortData: {
                 totalElements: 0
-            },
-            cohorts: this.get('store').findAll('cohort')
+            }
         };
     }
 });
