@@ -1,5 +1,5 @@
 {{yield}}
-<nav class="navbar grey darken-3 navbar-fixed-top row col-md-12">
+<nav class="navbar grey darken-3 navbar-fixed-top">
   <div class="container-fluid">
     <div class="nav navbar-nav navbar-left navbar-left-no-collapse col-md-7 no-padding">
       <div class="col-md-5">
@@ -8,16 +8,14 @@
           </div>
           <div style="display: inline-block; margin-left:10px;">Health Data Analytics</div>
       </div>
-      <li class="col-md-2">
-          <div>
-              <a>{{#link-to 'subsets'}}Subsets{{/link-to}}</a>
-          </div>
-      </li>
-      <div class="col-md-2">
-          <div>
-              <a>{{#link-to 'cohorts'}}Cohorts{{/link-to}}</a>
-          </div>
-      </div>
+      <ul>
+        <li>
+          {{#link-to 'subsets'}}Subsets{{/link-to}}
+        </li>
+        <li>
+          {{#link-to 'cohorts'}}Cohorts{{/link-to}}
+        </li>
+      </ul>
     </div>
 <!--
     <ul class="nav navbar-nav navbar-right navbar-right-no-collapse identity-services col-md-2">
