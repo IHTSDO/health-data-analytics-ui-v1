@@ -105,13 +105,10 @@ export default Ember.Controller.extend({
                         else{
                             encounterCriteriaData.conceptECL = item.ecl;
                         }
-                        if(item.includeDaysInPast !== null && item.includeDaysInPast !== undefined){
-                            if(item.includeDaysInPast === '*'){
-                                Ember.set(item, 'includeDaysInFuture', -1);
-                                Ember.set(item, 'includeDaysInPast', -1);
+                        if (item.timeConstraint !== null) {
+                            if (item.timeConstraint == "after") {
+                                encounterCriteriaData.withinDaysAfterPreviouslyMatchedEncounter = -1;
                             }
-                            encounterCriteriaData.withinDaysBeforePreviouslyMatchedEncounter = item.includeDaysInPast;
-                            encounterCriteriaData.withinDaysAfterPreviouslyMatchedEncounter = item.includeDaysInPast;
                         }
                         encounterCriteriaData.has = item.has;
                         postData.baseCriteria.encounterCriteria.push(encounterCriteriaData);

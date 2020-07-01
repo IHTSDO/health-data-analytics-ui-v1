@@ -21,65 +21,77 @@
             <option value="female" >Female</option>
           </select>
         </div>
-        <div class="col-md-10 col-md-offset-1 input-field">
+        <div class="col-md-4 col-md-offset-1 input-field">
             {{input id="ageMin-input" class="form-control" value=model.ageMin type="text"}}
             <label for="ageMin-input" style="margin-left:14px;">Minimum Age</label>
         </div>
-        <div class="col-md-10 col-md-offset-1 input-field">
+        <div class="col-md-4 input-field">
             {{input id="ageMax-input" class="form-control" value=model.ageMax type="text"}}
             <label for="ageMax-input" style="margin-left:14px;">Maximum Age</label>
         </div>
         <div class="col-md-10 col-md-offset-1">
-            <h3>Primary Exposure:</h3>
+            <h3>Patient Encounter:</h3>
         </div>
-        <div class="col-md-3 col-md-offset-1">
-                <select name="range" class="form-control refinementDdl" onChange={{action (mut model.primaryLimitation) value="target.value"}} style="display: inline-block;">
+        <div class="col-md-10 col-md-offset-1 input-field">
+            <select name="has" class="form-control refinementDdl" onChange={{action (mut refinement.has) value="target.value"}}>
+                <option value="true" selected>Patient has had</option>
+            </select>
+        </div>
+        <div class="col-md-2 col-md-offset-1 input-field">
+            <select name="range" class="form-control refinementDdl" onChange={{action (mut model.primaryLimitation) value="target.value"}} style="display: inline-block;">
+                <option value="404684003" selected>Clinical finding</option>
+                <option value="64572001" selected>Disorder</option>
+                <option value="373873005">Product</option>
+                <option value="71388002" >Procedure</option>
+                </select>
+        </div>
+        <div class="col-md-8 input-field">
+            {{concept-listing filter=model.primaryExposure value=model.primaryExposure limitedRange=true typeId=model.primaryLimitation conceptFsn=model.primaryFsn title='Concept or Subset' cssId="primaryExposureA"}}
+        </div>
+        {{#each model.inclusionCriteria as | refinement index|}}
+            <div class="col-md-10 col-md-offset-1 input-field">
+                <h3>and</h3>
+            </div>
+            <div class="col-md-10 col-md-offset-1 input-field">
+                <i class="material-icons prefix">date_range</i>
+                <select name="has" class="form-control refinementDdl prefixed" onChange={{action (mut refinement.timeConstraint) value="target.value"}}>
+                    <option value="any" selected>At any time</option>
+                    <option value="after">Subsequently</option>
+                </select>
+                {{!-- {{input class="form-control" value=refinement.includeDaysInPast type="text"}}
+                <label for="includeDaysInPast-input" style="margin-left:14px;" class="active">Time constraint</label> --}}
+            </div>
+            <div class="col-md-10 col-md-offset-1 input-field">
+                <select name="has" class="form-control refinementDdl" onChange={{action (mut refinement.has) value="target.value"}}>
+                    <option value="true" selected>Patient has had</option>
+                    <option value="false">Patient has not had</option>
+                    </select>
+            </div>
+            <div class="col-md-2 col-md-offset-1 input-field">
+                <select name="range" class="form-control refinementDdl" onChange={{action (mut refinement.limitation) value="target.value"}}>
                     <option value="404684003" selected>Clinical finding</option>
                     <option value="64572001" selected>Disorder</option>
                     <option value="373873005">Product</option>
                     <option value="71388002" >Procedure</option>
-                  </select>
+                    </select>
             </div>
-        <div class="col-md-8">
-            {{concept-listing filter=model.primaryExposure value=model.primaryExposure limitedRange=true typeId=model.primaryLimitation conceptFsn=model.primaryFsn title='Primary Exposure' cssId="primaryExposureA"}}
-        </div>
-        {{#each model.inclusionCriteria as | refinement index|}}
-            <div class="col-md-10 col-md-offset-1">
-                <h3>Refinement:</h3>
+            <div class="col-md-8 input-field">
+                {{concept-listing filter=refinement.ecl value=refinement.ecl limitedRange=true conceptFsn=refinement.fsn typeId=refinement.limitation title='Concept or Subset'}}
             </div>
-            <div class="row">
-                <div class="col-md-9 col-md-offset-2 input-field">
-                    {{input class="form-control" value=refinement.includeDaysInPast type="text"}}
-                    <label for="includeDaysInPast-input" style="margin-left:14px;" class="active">Include days</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2 col-md-offset-1">
-                    <select name="has" class="form-control refinementDdl" onChange={{action (mut refinement.has) value="target.value"}}>
-                        <option value="true" selected>Has</option>
-                        <option value="false">Has not</option>
-                      </select>
-                </div>
-                <div class="col-md-2">
-                    <select name="range" class="form-control refinementDdl" onChange={{action (mut refinement.limitation) value="target.value"}}>
-                        <option value="404684003" selected>Clinical finding</option>
-                        <option value="64572001" selected>Disorder</option>
-                        <option value="373873005">Product</option>
-                        <option value="71388002" >Procedure</option>
-                      </select>
-                </div>
-
-                <div class="col-md-5">
-                    {{concept-listing filter=refinement.ecl value=refinement.ecl limitedRange=true conceptFsn=refinement.fsn typeId=refinement.limitation title='Inclusion Criteria'}}
-                </div>
-                <div class="col-md-1">
-                    <a class="waves-effect waves-light btn red" {{action "deleteRefinement" index model.inclusionCriteria}}>Remove</a>
-                </div>
+            <div class="col-md-10 col-md-offset-9 input-field">
+                <a class="waves-effect waves-light btn red lighten-2" {{action "deleteRefinement" index model.inclusionCriteria}}>- Remove</a>
             </div>
         {{/each}}
 
+        <div class="col-md-10 col-md-offset-9 input-field">
+            <a class="btn btn-primary green" {{action "addQueryRefinement" (mut model.inclusionCriteria)}}>+ Add Clause</a>
+        </div>
+
         {{#if model.testOutcome}}
-            <div class="eclGroup col-md-12">
+            <div class="riskForm col-md-10 col-md-offset-1">
+                <div class="col-md-10 col-md-offset-1 input-field">
+                    <h3>Risk Calculation</h3>
+                </div>
                 <div class="col-md-9 col-md-offset-2  input-field">
                     {{input class="form-control" value=model.testVariable.includeDaysInFuture type="text"}}
                     <label for="includeDaysInPast-input" style="margin-left:14px;" class="active">Then within</label>
@@ -115,28 +127,27 @@
             </div>
         {{/if}}
 
-
-        <div class="row">
-            <div class="col-md-3 col-md-offset-1">
-                <a class="btn btn-primary green" {{action "addQueryRefinement" (mut model.inclusionCriteria)}}>Add Refinement</a>
-            </div>
-            {{#if model.testOutcome}}
+        {{#if model.testOutcome}}
+            <div class="row">
                 <div class="col-md-3 col-md-offset-1">
                     <a class="btn btn-primary red" {{action "removeTests" (mut model)}}>Remove Test</a>
                 </div>
                 <div class="col-md-3">
                     <a class="btn btn-primary" {{action "fetchCohort"}}>Run Test</a>
                 </div>
-            {{else}}
-                <div class="col-md-3 col-md-offset-1">
-                    <a class="btn btn-primary green" {{action "addTests" (mut model)}}>Add Test</a>
+            </div>
+        {{else}}
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 input-field">
+                    <a class="btn btn-primary waves-effect waves-light" style="width: 100%;" {{action "fetchCohort"}}>Fetch Cohort</a>
                 </div>
-                <div class="col-md-3">
-                    <a class="btn btn-primary" {{action "fetchCohort"}}>Fetch Cohort</a>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-md-offset-1 input-field">
+                    <a class="btn btn-primary green" {{action "addTests" (mut model)}}><i class="material-icons">donut_large</i> Setup Risk Calculation</a>
                 </div>
-            {{/if}}
-
-        </div>
+            </div>
+        {{/if}}
     </div>
     <div class="col-md-6">
         {{#if loading}}

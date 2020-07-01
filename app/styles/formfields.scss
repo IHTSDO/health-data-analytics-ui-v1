@@ -140,6 +140,13 @@ input[type=checkbox], input[type=radio] {
 	box-sizing: border-box;
 	padding: 0;
 }
+.material-icons.prefix {
+	margin-top: 19px;
+    margin-left: 6px;
+}
+.form-control.prefixed {
+	padding-left: 2.5em;
+}
 .has-success .form-control, .has-success .form-control:active, .has-success .form-control:focus {
 	border-color: transparent;
 	box-shadow: none;
